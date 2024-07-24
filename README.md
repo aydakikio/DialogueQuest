@@ -1,4 +1,4 @@
-![Dialogue Quest](https://github.com/aydakikio/DialogueQuest/blob/main/Logo/Dialogue%20quest.jpg?raw=true)
+![Dialogue Quest](./Logo/DialogueQuest.jpg)
 
 # Features
 
