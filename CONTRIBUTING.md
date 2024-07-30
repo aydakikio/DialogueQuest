@@ -24,6 +24,7 @@ If you are not familier with pull requests and git , [See GitHub's documentation
 > Here is the ways that increase your chance for being accepted your pull request:
 > * Plaese update the document for any afftect by your changes
 > * Make a clear discription for each part of your changes and their work
+> * Using Regions in code for each feature
 
 
 ## How to Share your Ideas
