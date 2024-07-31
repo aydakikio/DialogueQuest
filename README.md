@@ -6,8 +6,6 @@ Comming soon!
 
 # How to Contribute
 
-// NEEDs to be complete
-
 We’re building Dialogue Quest together with our community, and we’re always glad to have new contributors on board. Here’s how you can get involved and help us along the way:
 
 - Pick a Task from the TODO List: Dive into our TODO list and pick a task that interests you. Your contributions help us move the project forward faster.
@@ -16,9 +14,31 @@ We’re building Dialogue Quest together with our community, and we’re always 
   
 - Share Your Ideas: Have a great idea for a feature or improvement? We’re all ears! Your suggestions can help us to improve Dialogue Quest and make it even better.
 
+  
+> [!IMPORTANT]
+>  
+> For more details, check [this](https://github.com/aydakikio/DialogueQuest/blob/main/CONTRIBUTING.md).
+
 # TODO
 
-// NEEDs to be complete
+> [!NOTE]
+> This list will update later!
+  
+- Basic Node (Contains shared shared methods between Single Node and Choice Node and all the List for all of features)
+  
+   - [ ] Animation: Designing a function with an `object field` for gatering game objects and their assigned animations for saving them into a list
+  
+   - [ ] Flag: Designing a function with a `text field` for creating values and saving them into a list.
+  
+   - [ ] Speaker's Avatar: Designing a function with an `object field` for gathering sprites, including a small preview in the node itself, and saving them into a list.
+  
+   - [ ] Quest : Designing a function with an `object field` for obtaining quest info as `Scrptable Objects` amarking them as active or complete, and saving them into a list.
+  
+   - [ ] Inventory: Designing a function with an `object field` for gathering game objects ,adding or removing them from the player's inventory, and saving them into a list with actions types `remove` or `add`.
+  
+> [!IMPORTANT]
+> Most features run at runtime; we only save and gather info for use at runtime.
+
 
 # Donation
 
@@ -26,7 +46,7 @@ We believe in keeping Dialogue Quest completely free and accessible for everyone
 
 Donation Ways:
 
-   * Share our project with others: It will help us to make  Dialogue Quest  more accesassible for more developers.
+   * Share our project with others: It will help us to make Dialogue Quest more accesassible for more developers around the world.
   
    * BitCoin:
      
