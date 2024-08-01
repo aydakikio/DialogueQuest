@@ -1,6 +1,6 @@
 namespace DialogueQuest.Elements
 {
-    public class Single_Choice_Node : Base_node
+    public class Single_Node : Basic_Node
     {
         
         public override void draw()
