@@ -16,15 +16,11 @@ If you spot a bug or an issue please consider opening a new issue in [issues](ht
 > * Include the text of any error messages you received.
 > * Provide a brief explanation about things that you tried for fixing the problem or parts of code that you think may cause the error.  
 
-## How to work on TODO list items
+## How to contribute in bug fixes and development
 Before start doing one of Items in the list, please check [this topic](https://github.com/aydakikio/DialogueQuest/discussions/categories/working-on-todo) for making sure that no one is working on that specific item. if no one is working on that item follow these steps along:
 
-1. Make a new discussion in [Working On TODO](https://github.com/aydakikio/DialogueQuest/discussions/categories/working-on-todo).
-
-> [!IMPORTANT]
-> Please write the item's name in the discussion's topic section to make it easier for newcomers to contribute.
-
-2. [Fork](https://github.com/aydakikio/DialogueQuest/Fork) and Clone the repository.
+1. [Fork](https://github.com/aydakikio/DialogueQuest/Fork) and Clone the repository.
+2. Open the project with unity
 3. Make your changes.
 4. Push your fork and [submit a pull request](https://github.com/aydakikio/DialogueQuest/compare).
 5. Wait for your pull request to be reviewed.
