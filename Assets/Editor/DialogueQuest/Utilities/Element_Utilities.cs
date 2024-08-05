@@ -1,5 +1,6 @@
 using System;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DialogueQuest.Utilities
@@ -14,7 +15,7 @@ namespace DialogueQuest.Utilities
             
             if (On_Change != null)
             {
-                textField.RegisterValueChangedCallback(On_Change);
+                textField.RegisterValueChangedCallback(Event => { value = Event.newValue;});
             }
             
             return textField;

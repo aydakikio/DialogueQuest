@@ -40,7 +40,7 @@ namespace Dialogue_Quest.Window
 
         private IManipulator Create_Contextal_Menu(string action_title ,string parent_node_type,Node_Types Node_type )
         {
-            ContextualMenuManipulator Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction(action_title ,action_Event => Create_Node( action_Event.eventInfo.localMousePosition, parent_node_type , Node_type)));
+            ContextualMenuManipulator Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction(action_title ,action_Event => AddElement(Create_Node( action_Event.eventInfo.localMousePosition, parent_node_type , Node_type))));
             return Menu;
         }
         private Node Create_Node(Vector2 position , string parnent_node_type , Node_Types Node_type){
