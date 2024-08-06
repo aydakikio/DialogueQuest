@@ -1,7 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
-using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -13,12 +14,13 @@ namespace DialogueQuest.Elements
         public string Node_name { get; set; }
         public string Dialogue { get; set; }
         private int repeat_time = 1;
-
+        
         #region Flag resourses
 
            private Foldout Flag_Fold_Out = Element_Utilities.Create_FoldOut("Flag");
         
            private string Flag = "New Flag";
+           
            private List<string> Flags = new List<string>();
            public IReadOnlyCollection<string> Flags_List => Flags;
            
@@ -67,7 +69,7 @@ namespace DialogueQuest.Elements
             
             //Create Dialogue Box
             VisualElement Dialogue_box = new VisualElement();
-            Foldout Dialogue_foldOut = Element_Utilities.Create_FoldOut("Dialogue;");
+            Foldout Dialogue_foldOut = Element_Utilities.Create_FoldOut("Dialogue" , true);
             TextField Dialogue_Field = Element_Utilities.Create_Text_Box(Dialogue);
             
             
@@ -76,7 +78,6 @@ namespace DialogueQuest.Elements
             titleContainer.Insert(1 , option_menu);
             
             //Insert Input Container's Ports
-            
             inputContainer.Add(Base_input);
             
             //Insert Dialogue Box
@@ -90,36 +91,28 @@ namespace DialogueQuest.Elements
         #endregion
 
         #region Flag
-           private void ADD_Flag()
-           {
-               if (repeat_time % 3 ==0 )
-               {
-                   foreach (string item in Flags_List)
-                   {
-                       Debug.Log(item);
-                   }
-               }
-               
-               TextField Flag_Name = Element_Utilities.Create_TextField($"Flag{repeat_time}" , Flag );
-               Flag_Name.MarkDirtyRepaint();
-               Flag_Name.RegisterValueChangedCallback(Event =>
-               {
-                   //The next line should run at 1s if there is no new input 
-                    Flags.Add(Flag_Name.value);
-               });
-               
-               
-               VisualElement Flag_panel = new VisualElement();
-               
-               Flag_panel.Add(Flag_Name);
-               Flag_Fold_Out.Add(Flag_panel);
-               
-               Flag_Fold_Out.MarkDirtyRepaint();
-               extensionContainer.Add(Flag_Fold_Out);
-               repeat_time++;
-           }
-        
 
+        private void ADD_Flag()
+        {
+            var Flag_Name = Element_Utilities.Create_TextField($"Flag{repeat_time}", Flag);
+            Flag_Name.MarkDirtyRepaint();
+
+            Flag_Name.RegisterValueChangedCallback(Event =>
+            {
+                Thread.Sleep(60000);
+                Flags.Add(Event.newValue);
+            });
+
+            VisualElement Flag_panel = new VisualElement();
+
+            Flag_panel.Add(Flag_Name);
+            Flag_Fold_Out.Add(Flag_panel);
+
+            Flag_Fold_Out.MarkDirtyRepaint();
+            extensionContainer.Add(Flag_Fold_Out);
+            repeat_time++;
+        }
+        
         #endregion
        
 
@@ -143,5 +136,6 @@ namespace DialogueQuest.Elements
             
             return Drop_Down;
         }
+        
     }
 }
