@@ -15,7 +15,14 @@ namespace Dialogue_Quest.Window
 
         private void OnEnable()
         {
-            
+            ADD_GraphView();
+        }
+
+        private void ADD_GraphView()
+        {
+            Graph_View graph = new Graph_View();
+            graph.StretchToParentSize();
+            rootVisualElement.Add(graph);
         }
         
     }
