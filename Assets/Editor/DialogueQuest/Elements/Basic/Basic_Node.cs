@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
+using Unity.Plastic.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace DialogueQuest.Elements
@@ -21,8 +23,6 @@ namespace DialogueQuest.Elements
         
            private string Flag = "New Flag";
            
-           private List<string> Flags = new List<string>();
-           public IReadOnlyCollection<string> Flags_List => Flags;
            
         #endregion
        
@@ -60,12 +60,14 @@ namespace DialogueQuest.Elements
                         ADD_Flag();
                         option_menu.value = "ADD ITEM";
                         break;
+                    case "Animation" :
+                        break;
                 }
             });
             
             
             //Basic input
-            Port Base_input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
+            Port Base_input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi , $"In({repeat_time})");
             
             //Create Dialogue Box
             VisualElement Dialogue_box = new VisualElement();
@@ -94,14 +96,11 @@ namespace DialogueQuest.Elements
 
         private void ADD_Flag()
         {
+            
             var Flag_Name = Element_Utilities.Create_TextField($"Flag{repeat_time}", Flag);
             Flag_Name.MarkDirtyRepaint();
 
-            Flag_Name.RegisterValueChangedCallback(Event =>
-            {
-                Thread.Sleep(60000);
-                Flags.Add(Event.newValue);
-            });
+            Flag_Name.RegisterValueChangedCallback(Event => { Flag = Event.newValue; });
 
             VisualElement Flag_panel = new VisualElement();
 
@@ -110,29 +109,27 @@ namespace DialogueQuest.Elements
 
             Flag_Fold_Out.MarkDirtyRepaint();
             extensionContainer.Add(Flag_Fold_Out);
+            
             repeat_time++;
         }
         
         #endregion
-       
 
+        
         private void Add_Input()
         {
-            Port input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
+            Port input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi, $"In{repeat_time+1}");
+            
             inputContainer.Add(input);
             
             RefreshExpandedState();
+            
         }
         
         
-        private DropdownField Create_Drop_Down(string add_addition_item = null , int index = -1 )
+        private DropdownField Create_Drop_Down()
         {
             var Drop_Down = new DropdownField(null ,new List<string>{ "ADD ITEM", "Input","Flag"} , 0);
-
-            if (add_addition_item != null && index >= 0 )
-            {
-                Drop_Down.choices.Insert(index , add_addition_item);
-            }
             
             return Drop_Down;
         }
