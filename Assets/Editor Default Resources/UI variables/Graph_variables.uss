@@ -1,0 +1,6 @@
+:root{
+    --BackGround_colour: #121111;
+    --Line_colour: #d9d9d9;
+    --box_colour: #212121;
+    --spacing: 20;
+}

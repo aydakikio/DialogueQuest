@@ -15,6 +15,7 @@ namespace DialogueQuest.Elements
         private Root_Node root = new Root_Node();
         public string Node_name { get; set; }
         public string Dialogue { get; set; }
+        
         private int repeat_time = 1;
         
         #region Flag resourses
@@ -119,7 +120,9 @@ namespace DialogueQuest.Elements
         }
         
         #endregion
+        
 
+        #region Other
         
         private void Add_Input()
         {
@@ -131,7 +134,6 @@ namespace DialogueQuest.Elements
             
         }
         
-        
         private DropdownField Create_Drop_Down()
         {
             var Drop_Down = new DropdownField(null ,new List<string>{ "ADD ITEM", "Input","Flag"} , 0);
@@ -139,5 +141,6 @@ namespace DialogueQuest.Elements
             return Drop_Down;
         }
         
+        #endregion
     }
 }

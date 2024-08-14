@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DialogueQuest.Enumerations;
+using UnityEditor;
 
 namespace Dialogue_Quest.Window
 {
@@ -14,6 +15,7 @@ namespace Dialogue_Quest.Window
         public Graph_View()
         {
             ADD_Grid_Background();
+            Add_Graph_Styles();
             Add_Maniplators();
         }
 
@@ -38,6 +40,8 @@ namespace Dialogue_Quest.Window
             this.AddManipulator(new SelectionDragger());
         }
 
+        #region Node Creation & Menu Manipulators
+        
         private IManipulator Create_Contextal_Menu(string action_title ,string parent_node_type,Node_Types Node_type )
         {
             ContextualMenuManipulator Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction(action_title ,action_Event => AddElement(Create_Node( action_Event.eventInfo.localMousePosition, parent_node_type , Node_type))));
@@ -62,6 +66,25 @@ namespace Dialogue_Quest.Window
                 
             return basicNode;
         }
+        
+        #endregion
+
+        #region UI
+
+        private void Add_Grid_Background()
+        {
+            GridBackground background = new GridBackground();
+            background.StretchToParentSize();
+            Insert(0,background);
+        }
+
+        private void Add_Graph_Styles()
+        {
+            StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Assets/Editor Default Resources/UI variables/Graph_style.uss");
+            styleSheets.Add(styleSheet);
+        }
+        
+        #endregion
     }
 }
 
