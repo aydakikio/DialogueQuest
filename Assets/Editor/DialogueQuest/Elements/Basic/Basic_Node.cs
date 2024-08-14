@@ -20,10 +20,13 @@ namespace DialogueQuest.Elements
         #region Flag resourses
 
            private Foldout Flag_Fold_Out = Element_Utilities.Create_FoldOut("Flag");
-        
+            
            private string Flag = "New Flag";
+
+           private List<Stack<string>> Flags_private = new List<Stack<string>>();
+           public IReadOnlyCollection<Stack<string>> Flags => Flags_private;
            
-           
+           private Stack<string> Temp_values;
         #endregion
        
         #region UI and Position 
@@ -96,11 +99,13 @@ namespace DialogueQuest.Elements
 
         private void ADD_Flag()
         {
+            Temp_values = new Stack<string>();
+            Flags_private.Add(Temp_values );
             
             var Flag_Name = Element_Utilities.Create_TextField($"Flag{repeat_time}", Flag);
             Flag_Name.MarkDirtyRepaint();
 
-            Flag_Name.RegisterValueChangedCallback(Event => { Flag = Event.newValue; });
+            Flag_Name.RegisterValueChangedCallback(Event => { Thread.Sleep(30000);  Temp_values.Push(Event.newValue); });
 
             VisualElement Flag_panel = new VisualElement();
 
