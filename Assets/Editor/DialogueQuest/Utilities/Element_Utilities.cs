@@ -47,11 +47,9 @@ namespace DialogueQuest.Utilities
 
         #region  Other
 
-        public static Port Create_Port(this Node nodes , Orientation oriantaion , Direction direction , Port.Capacity capacity , string title )
+        public static Port Create_Port(this Node nodes , Orientation oriantaion , Direction direction , Port.Capacity capacity )
         {
             Port port = nodes.InstantiatePort(oriantaion, direction, capacity, typeof(int));
-
-            port.title = title;
             
             return port;
         }

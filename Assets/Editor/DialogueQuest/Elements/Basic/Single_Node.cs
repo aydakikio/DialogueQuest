@@ -17,14 +17,14 @@ namespace DialogueQuest.Elements
         {
             base.draw();
             
-            Port base_output = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Output , Port.Capacity.Multi , $"Out({time})");
+            Port base_output = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Output , Port.Capacity.Multi);
             
             outputContainer.Add(base_output);
         }
 
         private void Add_Output()
         {
-            Port output = Element_Utilities.Create_Port(this, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi,$"Out({time+1 })");
+            Port output = Element_Utilities.Create_Port(this, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi);
             output.title = $"Out{time}";
             
             outputContainer.Add(output);

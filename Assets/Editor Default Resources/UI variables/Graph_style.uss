@@ -1,6 +1,0 @@
-GridBackground{
-    --BackGround_colour:var();
-    --Line_colour:var();
-    --box_colour:var();
-    --spacing:var();
-}

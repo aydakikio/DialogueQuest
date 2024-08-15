@@ -1,0 +1,6 @@
+GridBackground{
+    --grindBackgrund-color:var(--UIVariables-colors-grid-light-BackGround);
+    --line-color:var(--UIVariables-colors-grid-light-line);
+    --box-color:var(--UIVariables-colors-grid-light-box);
+    --Spacing:var(--UIVariables-metrics-grid-20);
+}

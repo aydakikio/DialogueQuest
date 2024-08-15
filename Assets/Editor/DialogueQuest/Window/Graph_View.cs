@@ -14,18 +14,11 @@ namespace Dialogue_Quest.Window
     {
         public Graph_View()
         {
-            ADD_Grid_Background();
+            Add_Grid_Background();
             Add_Graph_Styles();
             Add_Maniplators();
         }
-
-        private void ADD_Grid_Background()
-        {
-            GridBackground gridBackground = new GridBackground();
-            gridBackground.StretchToParentSize();
-            Insert(0 , gridBackground );
-        }
-
+        
         private void Add_Maniplators()
         {
             this.AddManipulator(new ContentDragger());
@@ -80,7 +73,7 @@ namespace Dialogue_Quest.Window
 
         private void Add_Graph_Styles()
         {
-            StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Assets/Editor Default Resources/UI variables/Graph_style.uss");
+            StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Assets/Editor Default Resources/UIVariables/Graph_style.uss");
             styleSheets.Add(styleSheet);
         }
         

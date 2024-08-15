@@ -36,8 +36,7 @@ namespace DialogueQuest.Elements
         {
             Node_name = "New Node";
             
-            root.Assign_ID();
-            Debug.Log(Node_ID);
+             root.Assign_ID();
             
             Dialogue = "Dialgue Text";
             
@@ -71,7 +70,7 @@ namespace DialogueQuest.Elements
             
             
             //Basic input
-            Port Base_input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi , $"In({repeat_time})");
+            Port Base_input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi );
             
             //Create Dialogue Box
             VisualElement Dialogue_box = new VisualElement();
@@ -126,7 +125,7 @@ namespace DialogueQuest.Elements
         
         private void Add_Input()
         {
-            Port input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi, $"In{repeat_time+1}");
+            Port input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
             
             inputContainer.Add(input);
             
