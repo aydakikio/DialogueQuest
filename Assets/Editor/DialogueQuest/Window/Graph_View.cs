@@ -26,6 +26,8 @@ namespace Dialogue_Quest.Window
             
             //Create ADD Node Menu
             this.AddManipulator(Create_Contextal_Menu("Add Node (Single Node) " , "Basic" , Node_Types.Single_Node));
+            this.AddManipulator(Create_Contextal_Menu("Add Node (Choice Node) " , "Basic" , Node_Types.Choice_Node));
+
 
             //Set other manipulators
             this.AddManipulator(new SelectionDragger());

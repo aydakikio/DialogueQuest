@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -54,6 +56,22 @@ namespace DialogueQuest.Utilities
             return port;
         }
         
+        public static string Hash(string data)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (SHA256 hash = SHA256Managed.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                Byte[] result = hash.ComputeHash(enc.GetBytes(data));
+
+                foreach (var item in result)
+                {
+                    sb.Append(item.ToString("x2"));
+                }
+            }
+
+            return sb.ToString();
+        }
 
         #endregion
         

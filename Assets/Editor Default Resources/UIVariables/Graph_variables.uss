@@ -2,5 +2,5 @@
     --UIVariables-colors-grid-light-BackGround: #212121;
     --UIVariables-colors-grid-light-line: rgba(238, 238, 238, 0.95);
     --UIVariables-colors-grid-light-box: rgba(59, 59, 59, 0.98);
-    --UIVariables-metrics-grid-20: 20;
+    --UIVariables-metrics-grid-20: 10;
 }

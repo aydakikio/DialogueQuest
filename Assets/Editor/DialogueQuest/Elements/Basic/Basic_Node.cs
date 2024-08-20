@@ -1,11 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
-using Unity.Plastic.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace DialogueQuest.Elements
@@ -13,10 +11,14 @@ namespace DialogueQuest.Elements
     public class Basic_Node : Root_Node
     {
         private Root_Node root = new Root_Node();
+        private Single_Node single = new Single_Node();
         public string Node_name { get; set; }
         public string Dialogue { get; set; }
         
+        public string ID { get; set; }
+        
         private int repeat_time = 1;
+        private int time = 1;
         
         #region Flag resourses
 
@@ -35,19 +37,24 @@ namespace DialogueQuest.Elements
         public virtual void Initialize(Vector2 position)
         {
             Node_name = "New Node";
-            
-             root.Assign_ID();
+
+            ID = Assign_ID();
+             
             
             Dialogue = "Dialgue Text";
             
             SetPosition(new Rect(position , Vector2.zero));
+            
         }
         public virtual void draw()
         {
             TextField Get_node_name = Element_Utilities.Create_TextField(null,Node_name);
             Get_node_name.MarkDirtyRepaint();
+           
             
             root.Add_Node_name(Node_name);
+            
+            
             
             //Create Drop Down 
             var option_menu = Create_Drop_Down();
@@ -70,7 +77,8 @@ namespace DialogueQuest.Elements
             
             
             //Basic input
-            Port Base_input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi );
+            Port Base_input = this.Create_Port(Orientation.Horizontal , Direction.Input,Port.Capacity.Multi );
+            Base_input.portName = $"In {time} ";
             
             //Create Dialogue Box
             VisualElement Dialogue_box = new VisualElement();
@@ -80,7 +88,7 @@ namespace DialogueQuest.Elements
             
             //Insert Node Name Field 
             titleContainer.Insert(0 , Get_node_name);
-            titleContainer.Insert(1 , option_menu);
+            titleButtonContainer.Add( option_menu);
             
             //Insert Input Container's Ports
             inputContainer.Add(Base_input);
@@ -125,12 +133,14 @@ namespace DialogueQuest.Elements
         
         private void Add_Input()
         {
-            Port input = Element_Utilities.Create_Port(this , Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
+            Port input = this.Create_Port( Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
+            input.portName = $"In {time + 1 } ";
             
             inputContainer.Add(input);
             
             RefreshExpandedState();
             
+
         }
         
         private DropdownField Create_Drop_Down()
@@ -139,6 +149,7 @@ namespace DialogueQuest.Elements
             
             return Drop_Down;
         }
+        
         
         #endregion
     }
