@@ -11,7 +11,6 @@ namespace DialogueQuest.Elements
     public class Basic_Node : Root_Node
     {
         private Root_Node root = new Root_Node();
-        private Single_Node single = new Single_Node();
         public string Node_name { get; set; }
         public string Dialogue { get; set; }
         
@@ -50,6 +49,7 @@ namespace DialogueQuest.Elements
         {
             TextField Get_node_name = Element_Utilities.Create_TextField(null,Node_name);
             Get_node_name.MarkDirtyRepaint();
+            
            
             
             root.Add_Node_name(Node_name);
@@ -88,7 +88,7 @@ namespace DialogueQuest.Elements
             
             //Insert Node Name Field 
             titleContainer.Insert(0 , Get_node_name);
-            titleButtonContainer.Add( option_menu);
+            titleButtonContainer.Insert(0, option_menu);
             
             //Insert Input Container's Ports
             inputContainer.Add(Base_input);
@@ -133,8 +133,9 @@ namespace DialogueQuest.Elements
         
         private void Add_Input()
         {
+            time++;
             Port input = this.Create_Port( Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
-            input.portName = $"In {time + 1 } ";
+            input.portName = $"In {time} ";
             
             inputContainer.Add(input);
             

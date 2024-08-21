@@ -25,13 +25,14 @@ namespace DialogueQuest.Elements
             Button add_Output = Element_Utilities.Create_Button("Add Output", () => Add_Output());
             
             outputContainer.Add(base_output);
-            titleContainer.Insert(1, add_Output);
+            mainContainer.Insert(1, add_Output);
         }
 
-        public void Add_Output()
-        {
+         private void Add_Output()
+         {
+             time++;
             Port output = Element_Utilities.Create_Port(this, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi);
-            output.portName = $"Out{time+1}";
+            output.portName = $"Out{time} ";
             
             outputContainer.Add(output);
             

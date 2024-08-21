@@ -63,7 +63,38 @@ namespace Dialogue_Quest.Window
         }
         
         #endregion
+        
+        #region Port Check
 
+        public override List<Port> GetCompatiblePorts(Port Start_Port, NodeAdapter Node_Adapter)
+        {
+            List<Port> Compatible_ports = new List<Port>();
+            ports.ForEach(port => { 
+                
+                if(Start_Port == port)
+                {
+
+                    return;
+                } 
+                if(Start_Port.node == port.node)
+                {
+                    return;
+                }
+                if(Start_Port.direction == port.direction)
+                {
+                    return;
+                }
+                
+                Compatible_ports.Add(port);
+                
+            });
+            
+            return Compatible_ports;
+            
+        }
+
+        #endregion
+        
         #region UI
 
         private void Add_Grid_Background()
