@@ -1,3 +1,4 @@
+using DialogueQuest.Enumerations;
 using DialogueQuest.Utilities;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -6,8 +7,9 @@ using UnityEngine.UIElements;
 
 namespace DialogueQuest.Elements
 {
-    public class Single_Node : Basic_Node {
-        
+    public class Single_Node : Basic_Node
+    {
+        private Node_Types node_types = Node_Types.Single_Node;
         private int time = 1;
         
         public override void Initialize(Vector2 position)

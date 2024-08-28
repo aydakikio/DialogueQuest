@@ -17,7 +17,7 @@ namespace DialogueQuest.Utilities
             
             if (On_Change != null)
             {
-                textField.RegisterValueChangedCallback(Event => { value = Event.newValue;});
+                textField.RegisterValueChangedCallback(On_Change);
             }
             
             return textField;

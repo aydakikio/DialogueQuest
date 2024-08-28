@@ -50,12 +50,9 @@ namespace DialogueQuest.Elements
             TextField Get_node_name = Element_Utilities.Create_TextField(null,Node_name);
             Get_node_name.MarkDirtyRepaint();
             
-           
+            Get_node_name.RegisterValueChangedCallback(Event => { Thread.Sleep(1000);  root.Add_Node_name(Event.newValue); });
             
-            root.Add_Node_name(Node_name);
-            
-            
-            
+                      
             //Create Drop Down 
             var option_menu = Create_Drop_Down();
             option_menu.RegisterValueChangedCallback(Event =>
@@ -96,6 +93,7 @@ namespace DialogueQuest.Elements
             //Insert Dialogue Box
             Dialogue_box.Add(Dialogue_Field);
             Dialogue_foldOut.Add(Dialogue_box);
+            
             
             extensionContainer.Add(Dialogue_foldOut);
             
@@ -153,5 +151,6 @@ namespace DialogueQuest.Elements
         
         
         #endregion
+        
     }
 }
