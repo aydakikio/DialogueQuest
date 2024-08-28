@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
 using UnityEditor.Experimental.GraphView;
@@ -28,7 +30,6 @@ namespace DialogueQuest.Elements
            private List<Stack<string>> Flags_private = new List<Stack<string>>();
            public IReadOnlyCollection<Stack<string>> Flags => Flags_private;
            
-           private Stack<string> Temp_values;
         #endregion
        
         #region UI and Position 
@@ -50,7 +51,7 @@ namespace DialogueQuest.Elements
             TextField Get_node_name = Element_Utilities.Create_TextField(null,Node_name);
             Get_node_name.MarkDirtyRepaint();
             
-            Get_node_name.RegisterValueChangedCallback(Event => { Thread.Sleep(1000);  root.Add_Node_name(Event.newValue); });
+            Get_node_name.RegisterValueChangedCallback( Event => { wait_node_name(Event.newValue); });
             
                       
             //Create Drop Down 
@@ -105,13 +106,13 @@ namespace DialogueQuest.Elements
 
         private void ADD_Flag()
         {
-            Temp_values = new Stack<string>();
+            Stack<string> Temp_values = new Stack<string>();
             Flags_private.Add(Temp_values );
             
             var Flag_Name = Element_Utilities.Create_TextField($"Flag{repeat_time}", Flag);
             Flag_Name.MarkDirtyRepaint();
 
-            Flag_Name.RegisterValueChangedCallback(Event => { Thread.Sleep(30000);  Temp_values.Push(Event.newValue); });
+            Flag_Name.RegisterValueChangedCallback( Event => { Flag_Wait(Event.newValue , Temp_values ); });
 
             VisualElement Flag_panel = new VisualElement();
 
@@ -122,6 +123,18 @@ namespace DialogueQuest.Elements
             extensionContainer.Add(Flag_Fold_Out);
             
             repeat_time++;
+        }
+
+        private async void Flag_Wait(string value, Stack<string> current_stack)
+        {
+            await Task.Delay(3000);
+
+            if (current_stack != null)
+            {
+                current_stack.Push(value);
+            }
+            
+            
         }
         
         #endregion
@@ -148,8 +161,13 @@ namespace DialogueQuest.Elements
             
             return Drop_Down;
         }
-        
-        
+
+        private async void wait_node_name(string value)
+        {
+            await Task.Delay(1000);
+            
+            root.Add_Node_name(value);
+        }
         #endregion
         
     }
