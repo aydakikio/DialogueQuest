@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DialogueQuest.Data;
 using UnityEditor.Experimental.GraphView;
 using DialogueQuest.Utilities;
 
@@ -12,13 +13,15 @@ namespace DialogueQuest.Elements
         private List<string> Node_IDs = new List<string>();
         public IReadOnlyCollection<string> Node_IDs_list => Node_IDs;
 
-        private List<Stack<string>> Node_names = new List<Stack<string>>();
-        public IReadOnlyCollection<Stack<string>> Node_names_List => Node_names;
+        private List<Node_Name_Data> Node_names = new List<Node_Name_Data>();
+        public IReadOnlyCollection<Node_Name_Data> Node_names_List => Node_names;
 
         private List<string> start_points = new List<string>();
         public IReadOnlyCollection<string> start_points_list => start_points;
         private Stack<string> temp_values;
 
+        #region ID assignment & Name managment
+        
         public string Assign_ID()
         {
             
@@ -28,18 +31,22 @@ namespace DialogueQuest.Elements
             return Node_ID;
         }
 
-        public void Add_Node_name(string node_name)
+        public void Add_Node_name(Node_Name_Data name_data)
         {
-            temp_values = new Stack<string>();
-            Node_names.Add(temp_values);
             
-            temp_values.Push(node_name);
+            Node_names.Add(name_data);
             
         }
+        #endregion
 
+        
+        #region Manging Start Points
         public void Add_start_points(string node_name)
         {
             start_points.Add(node_name);
         }
+        
+        #endregion
+       
     }
 }

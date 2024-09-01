@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
+using DialogueQuest.Data;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
 using UnityEditor.Experimental.GraphView;
@@ -27,8 +25,8 @@ namespace DialogueQuest.Elements
             
            private string Flag = "New Flag";
 
-           private List<Stack<string>> Flags_private = new List<Stack<string>>();
-           public IReadOnlyCollection<Stack<string>> Flags => Flags_private;
+           private List<Flag_Data> Flags_private = new List<Flag_Data>();
+           public IReadOnlyCollection<Flag_Data> Flags => Flags_private;
            
         #endregion
        
@@ -48,10 +46,13 @@ namespace DialogueQuest.Elements
         }
         public virtual void draw()
         {
+            Node_Name_Data name_data = new Node_Name_Data();
+            root.Add_Node_name(name_data);
+            
             TextField Get_node_name = Element_Utilities.Create_TextField(null,Node_name);
             Get_node_name.MarkDirtyRepaint();
             
-            Get_node_name.RegisterValueChangedCallback( Event => { wait_node_name(Event.newValue); });
+            Get_node_name.RegisterValueChangedCallback(Event => { name_data.Node_name = Event.newValue; });
             
                       
             //Create Drop Down 
@@ -106,16 +107,18 @@ namespace DialogueQuest.Elements
 
         private void ADD_Flag()
         {
-            Stack<string> Temp_values = new Stack<string>();
-            Flags_private.Add(Temp_values );
+            Flag_Data flag = new Flag_Data();
+            Flags_private.Add(flag);
             
             var Flag_Name = Element_Utilities.Create_TextField($"Flag{repeat_time}", Flag);
             Flag_Name.MarkDirtyRepaint();
 
-            Flag_Name.RegisterValueChangedCallback( Event => { Flag_Wait(Event.newValue , Temp_values ); });
+            Flag_Name.RegisterValueChangedCallback(Event => { flag.Flag_text = Event.newValue; });
+
+            Button delete_flag = Element_Utilities.Create_Button("X" , () => Delete_Flag(flag));
 
             VisualElement Flag_panel = new VisualElement();
-
+            
             Flag_panel.Add(Flag_Name);
             Flag_Fold_Out.Add(Flag_panel);
 
@@ -125,16 +128,14 @@ namespace DialogueQuest.Elements
             repeat_time++;
         }
 
-        private async void Flag_Wait(string value, Stack<string> current_stack)
+        private void Delete_Flag(Flag_Data flag_item)
         {
-            await Task.Delay(3000);
-
-            if (current_stack != null)
+            if (Flags.Count <= 0)
             {
-                current_stack.Push(value);
+                extensionContainer.Remove(Flag_Fold_Out);
             }
-            
-            
+
+            Flags_private.Remove(flag_item);
         }
         
         #endregion
@@ -162,12 +163,6 @@ namespace DialogueQuest.Elements
             return Drop_Down;
         }
 
-        private async void wait_node_name(string value)
-        {
-            await Task.Delay(1000);
-            
-            root.Add_Node_name(value);
-        }
         #endregion
         
     }
