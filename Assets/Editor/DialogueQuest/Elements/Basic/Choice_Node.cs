@@ -12,6 +12,15 @@ namespace DialogueQuest.Elements
         {
             base.Initialize(position);
         }
-        
+
+        public override void draw()
+        {
+            base.draw();
+        }
+
+        private void Create_Choice_Port()
+        {
+            //For creating choides and removing 
+        }
     }
 }

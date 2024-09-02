@@ -10,8 +10,8 @@ namespace DialogueQuest.Elements
     {
         private string Node_ID { get; set; }
         
-        private List<string> Node_IDs = new List<string>();
-        public IReadOnlyCollection<string> Node_IDs_list => Node_IDs;
+        private List<string> Node_IDs = new List<string>(); 
+        public IReadOnlyCollection<string> Node_IDs_list => Node_IDs; 
 
         private List<Node_Name_Data> Node_names = new List<Node_Name_Data>();
         public IReadOnlyCollection<Node_Name_Data> Node_names_List => Node_names;

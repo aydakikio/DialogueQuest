@@ -119,7 +119,8 @@ namespace DialogueQuest.Elements
 
             VisualElement Flag_panel = new VisualElement();
             
-            Flag_panel.Add(Flag_Name);
+            Flag_panel.Insert(0, delete_flag) ;//Beta
+            Flag_panel.Insert(1, Flag_Name);
             Flag_Fold_Out.Add(Flag_panel);
 
             Flag_Fold_Out.MarkDirtyRepaint();
@@ -133,6 +134,7 @@ namespace DialogueQuest.Elements
             if (Flags.Count <= 0)
             {
                 extensionContainer.Remove(Flag_Fold_Out);
+                
             }
 
             Flags_private.Remove(flag_item);
