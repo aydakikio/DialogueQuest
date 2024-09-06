@@ -10,24 +10,30 @@ namespace DialogueQuest.Elements
     {
         private string Node_ID { get; set; }
         
-        private List<string> Node_IDs = new List<string>(); 
-        public IReadOnlyCollection<string> Node_IDs_list => Node_IDs; 
+        
+        private List<Node_Id_data> Node_IDs = new List<Node_Id_data>(); 
+        public IReadOnlyCollection<Node_Id_data> Node_IDs_list => Node_IDs; 
+        
 
         private List<Node_Name_Data> Node_names = new List<Node_Name_Data>();
         public IReadOnlyCollection<Node_Name_Data> Node_names_List => Node_names;
+        
 
-        private List<string> start_points = new List<string>();
-        public IReadOnlyCollection<string> start_points_list => start_points;
-        private Stack<string> temp_values;
-
+        private List<Start_Point_Data> start_points = new List<Start_Point_Data>();
+        public IReadOnlyCollection<Start_Point_Data> start_points_list => start_points;
+        
+        
         #region ID assignment & Name managment
         
         public string Assign_ID()
         {
+            Node_Id_data Id_data = new Node_Id_data();
             
             Node_ID = Element_Utilities.Hash(new Guid().ToString());
-            Node_IDs.Add(Node_ID);
-
+            Node_ID = Id_data.Id ;
+            
+            Node_IDs.Add(Id_data);
+            
             return Node_ID;
         }
 
@@ -41,9 +47,14 @@ namespace DialogueQuest.Elements
 
         
         #region Manging Start Points
-        public void Add_start_points(string node_name)
+        public void Add_start_points(Node_Name_Data node_name , string ID)
         {
-            start_points.Add(node_name);
+            Start_Point_Data point_data = new Start_Point_Data();
+
+            ID = point_data.Node_Id;
+            node_name = point_data.Node_Name;
+            
+            start_points.Add(point_data);
         }
         
         #endregion

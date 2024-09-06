@@ -165,6 +165,11 @@ namespace DialogueQuest.Elements
             return Drop_Down;
         }
 
+        public void On_Delete()
+        {
+            
+        }
+
         #endregion
         
     }
