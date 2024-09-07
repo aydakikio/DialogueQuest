@@ -7,6 +7,6 @@ namespace DialogueQuest.Data
     public class Start_Point_Data
     {
         [field:SerializeField] public string Node_Id { get; set; }
-        [field:SerializeField] public Node_Name_Data Node_Name { get; set; }
+        [field:SerializeField] public string Node_Name { get; set; }
     }
 }
