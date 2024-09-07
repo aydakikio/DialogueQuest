@@ -9,10 +9,6 @@ namespace DialogueQuest.Elements
     public class Root_Node : Node
     {
         private string Node_ID { get; set; }
-
-        private List<Start_Point_Data> start_points = new List<Start_Point_Data>();
-        public IReadOnlyCollection<Start_Point_Data> start_points_list => start_points;
-        
         
         #region ID assignment & Name managment
         
@@ -28,12 +24,12 @@ namespace DialogueQuest.Elements
         #region Manging Start Points
         public void Add_start_points(string node_name , string ID)
         {
-            Start_Point_Data point_data = new Start_Point_Data();
+            //Be completed in future 
+        }
 
-            ID = point_data.Node_Id;
-            node_name = point_data.Node_Name;
+        public void Remove_start_points()
+        {
             
-            start_points.Add(point_data);
         }
         
         #endregion

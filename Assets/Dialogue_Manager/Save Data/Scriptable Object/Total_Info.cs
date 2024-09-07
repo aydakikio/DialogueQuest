@@ -7,9 +7,12 @@ namespace DialogueQuest.Data
     [Serializable]
     public class Total_Info : ScriptableObject
     {
+        /*
         [field:SerializeField] public List<Node_Id_data> IDs { get; set; }
         [field:SerializeField] public List<string> Node_Names { get; set; }
         [field:SerializeField] public List<string> Start_points { get; set; } //stores start point's ID
+        
+        int node numbers -> for saving the counted created nodes
         
 
         public void Instance(List<Node_Id_data> ids , List<string> names , List<string> start_points)
@@ -18,5 +21,6 @@ namespace DialogueQuest.Data
             Node_Names = names;
             Start_points = start_points;
         }
+        */
     }
 }
