@@ -8,6 +8,6 @@ namespace DialogueQuest.Data
     {
         //Needs to complete
         [field:SerializeField] public GameObject Object { get; set; }
-        [field:SerializeField] public string animation_name { get; set; }
+        [field:SerializeField] public string selected_animation { get; set; }
     }
 }

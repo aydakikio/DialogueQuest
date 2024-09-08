@@ -1,17 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using DialogueQuest.Elements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DialogueQuest.Enumerations;
+using DialogueQuest.Utilities;
 using UnityEditor;
 
 namespace Dialogue_Quest.Window
 {
     public class Graph_View : GraphView
     {
+        private string temp_folder_name;
         public Graph_View()
         {
             Add_Grid_Background();
@@ -108,6 +112,35 @@ namespace Dialogue_Quest.Window
         {
             StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Assets/Editor Default Resources/UIVariables/Graph_style.uss");
             styleSheets.Add(styleSheet);
+        }
+        
+        #endregion
+
+        #region Managing & Searching Graph statics
+
+        public void Creating_Statics(int mode)
+        {
+            
+            
+
+            string path = Path.GetFullPath(AssetDatabase.GUIDToAssetPath(temp_folder_name));
+            switch (mode)
+            {
+                case 0 : //For not saved situations or first creation of new graph
+                    
+                    temp_folder_name = Element_Utilities.Hash(new Guid().ToString());
+                    
+                    if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save")== false)
+                    {
+                        AssetDatabase.CreateFolder("Assets/Dialogue_Manager", temp_folder_name );
+                    }
+                    
+                    break;
+                case 1:  //For Saving situation and loading statics 
+                    
+                    
+                    break;
+            }
         }
         
         #endregion
