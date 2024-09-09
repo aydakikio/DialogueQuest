@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using DialogueQuest.Enumerations;
 using DialogueQuest.Utilities;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 
 namespace Dialogue_Quest.Window
@@ -31,8 +32,8 @@ namespace Dialogue_Quest.Window
             //Create ADD Node Menu
             this.AddManipulator(Create_Contextal_Menu("Add Node (Single Node) " , "Basic" , Node_Types.Single_Node));
             this.AddManipulator(Create_Contextal_Menu("Add Node (Choice Node) " , "Basic" , Node_Types.Choice_Node));
-
-
+            
+            
             //Set other manipulators
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
@@ -115,35 +116,7 @@ namespace Dialogue_Quest.Window
         }
         
         #endregion
-
-        #region Managing & Searching Graph statics
-
-        public void Creating_Statics(int mode)
-        {
-            
-            
-
-            string path = Path.GetFullPath(AssetDatabase.GUIDToAssetPath(temp_folder_name));
-            switch (mode)
-            {
-                case 0 : //For not saved situations or first creation of new graph
-                    
-                    temp_folder_name = Element_Utilities.Hash(new Guid().ToString());
-                    
-                    if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save")== false)
-                    {
-                        AssetDatabase.CreateFolder("Assets/Dialogue_Manager", temp_folder_name );
-                    }
-                    
-                    break;
-                case 1:  //For Saving situation and loading statics 
-                    
-                    
-                    break;
-            }
-        }
         
-        #endregion
     }
 }
 
