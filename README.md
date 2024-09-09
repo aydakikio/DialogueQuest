@@ -4,6 +4,13 @@
 
 Comming soon!
 
+
+# Installation and first Setup
+
+Comming Soon!
+
+
+
 # How to Contribute
 
 We’re building Dialogue Quest together with our community, and we’re always glad to have new contributors on board. Here’s how you can get involved and help us along the way:
@@ -22,7 +29,7 @@ We believe in keeping Dialogue Quest completely free and accessible for everyone
 
 Donation Ways:
 
-   * Share our project with others: It will help us to make Dialogue Quest more accesassible for more developers around the world.
+   * Share our project with others
   
    * BitCoin:
      
@@ -46,3 +53,4 @@ Donation Ways:
 
 #  Lisence 
  Dialogue Quest is released under the GPL-3.0 License. For more information see [LICENSE](https://github.com/aydakikio/DialogueQuest/blob/main/LICENSE).
+
