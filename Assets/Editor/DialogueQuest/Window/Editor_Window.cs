@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using DialogueQuest;
 using DialogueQuest.Utilities;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -11,6 +12,12 @@ namespace Dialogue_Quest.Window
     {
         private TextField file_name_field;
         private Button Save_button;
+        private Graph_Static_handeler static_handler;
+        private string statics_temp_name;
+        private Toolbar toolbar;
+        private Graph_View graph;
+
+        private Label totoal_number;
         
         [MenuItem("Window/Dialogue_Quest")]    
         public static void ShowExample()
@@ -22,11 +29,19 @@ namespace Dialogue_Quest.Window
         {
             ADD_GraphView();
             Create_Toolbar();
+            
+        }
+
+        private void Update()
+        {
+            
+            totoal_number.text = graph.get_total_nodes_number();
+            
         }
 
         private void ADD_GraphView()
         {
-            Graph_View graph = new Graph_View();
+            graph = new Graph_View();
             graph.StretchToParentSize();
             rootVisualElement.Add(graph);
         }
@@ -35,7 +50,8 @@ namespace Dialogue_Quest.Window
 
         private void Create_Toolbar()
         {
-            Toolbar toolbar = new Toolbar();
+            toolbar = new Toolbar();
+            
             file_name_field = Element_Utilities.Create_TextField("File Name:", "New Graph", callback => {
                 file_name_field.value = remove_unwanted_chracters(callback.newValue);
             });
@@ -44,10 +60,17 @@ namespace Dialogue_Quest.Window
             Save_button = Element_Utilities.Create_Button("Save");
             Button Load_button = Element_Utilities.Create_Button("Load");
             
+            //Node count info 
+            Label status_label = new Label("  Nodes: ");
+            totoal_number = new Label(graph.get_total_nodes_number());
+            
             //Insert UI Elements to Toolbar
             toolbar.Insert(0,file_name_field);
             toolbar.Insert(1,Save_button);
             toolbar.Insert(2,Load_button);
+            toolbar.Insert(3,status_label);
+            toolbar.Insert(4 , totoal_number );
+            
             
             rootVisualElement.Add(toolbar);
         }
@@ -72,10 +95,24 @@ namespace Dialogue_Quest.Window
         
         #endregion
 
+        #region Graph Statics
+
+        private void Create_Graph_Statics(int mode)
+        {
+            static_handler = new Graph_Static_handeler();
+
+            statics_temp_name = static_handler.create_graph_static();
+            
+            
+        }
+        
+
+        #endregion
+
 
         #region Save and Load
 
-        private void Save()
+        private void Save(string statics_temp_name)
         {
             
         }

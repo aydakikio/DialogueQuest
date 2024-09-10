@@ -17,6 +17,7 @@ namespace Dialogue_Quest.Window
     public class Graph_View : GraphView
     {
         private string temp_folder_name;
+        private int total_nodes_number = 0;
         public Graph_View()
         {
             Add_Grid_Background();
@@ -47,7 +48,10 @@ namespace Dialogue_Quest.Window
             ContextualMenuManipulator Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction(action_title ,action_Event => AddElement(Create_Node( action_Event.eventInfo.localMousePosition, parent_node_type , Node_type))));
             return Menu;
         }
-        private Node Create_Node(Vector2 position , string parnent_node_type , Node_Types Node_type){
+        private Node Create_Node(Vector2 position , string parnent_node_type , Node_Types Node_type)
+        {
+
+            total_nodes_number = total_nodes_number + 1;
             
             //For special nodes
             if (parnent_node_type.ToLower() == "special")
@@ -116,7 +120,16 @@ namespace Dialogue_Quest.Window
         }
         
         #endregion
+
+        #region Other
+
+        public string get_total_nodes_number()
+        { 
+            return total_nodes_number.ToString();
+        }
         
+
+        #endregion
     }
 }
 
