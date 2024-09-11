@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
+using DialogueQuest;
 using DialogueQuest.Elements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -16,8 +15,12 @@ namespace Dialogue_Quest.Window
 {
     public class Graph_View : GraphView
     {
-        private string temp_folder_name;
         private int total_nodes_number = 0;
+        
+        private string temp_folder_name;
+        private Graph_Static_handeler static_handler;
+        
+        
         public Graph_View()
         {
             Add_Grid_Background();
@@ -104,6 +107,19 @@ namespace Dialogue_Quest.Window
 
         #endregion
         
+        #region Graph Statics
+
+        private void Create_Graph_Statics(int mode)
+        {
+            static_handler = new Graph_Static_handeler();
+
+            temp_folder_name = static_handler.create_graph_static();
+            
+        }
+        
+
+        #endregion
+        
         #region UI
 
         private void Add_Grid_Background()
@@ -127,6 +143,7 @@ namespace Dialogue_Quest.Window
         { 
             return total_nodes_number.ToString();
         }
+        
         
 
         #endregion

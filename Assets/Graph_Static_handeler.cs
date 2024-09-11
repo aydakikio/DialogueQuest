@@ -16,6 +16,7 @@ namespace DialogueQuest
         private string temp_name;
         private string full_path = Path.GetFullPath(Environment.CurrentDirectory);
         
+        
         public string create_graph_static()
         {
             temp_name = Hash(new Guid().ToString());
@@ -29,7 +30,7 @@ namespace DialogueQuest
                 AssetDatabase.CreateFolder($"Assets/Dialogue_Manager/Save/" , temp_name);
             }
             
-            var statics = new SQLiteConnection($"Data Source=file:{full_path}//Dialogue_Manager/Save/{temp_name}/Graph_Statics.db");
+            SQLiteConnection statics = new SQLiteConnection($"Data Source=file:{full_path}//Dialogue_Manager/Save/{temp_name}/Graph_Statics.db");
             
             
 
@@ -44,14 +45,17 @@ namespace DialogueQuest
         }
         
 
-        public void rename_the_graph_static_folder(string graph_file_name)
+        public void rename_the_graph_static_folder(string graph_file_name , string temp_folder_name)
         {
-            
+            AssetDatabase.MoveAsset($"Assets/Dialogue_Manager/Save/{temp_folder_name} " , $"Assets/Dialogue_Manager/Save/{graph_file_name}");
         }
 
-        public void Add_items_to_statics()
+        public void Add_items_to_statics(string temp , string graph_file_name)
         {
-            
+            if (AssetDatabase.IsValidFolder($"Assets/Dialogue_Manager/Save/{temp}") != true )
+            {
+                
+            }
         }
 
         public void Remove_items_from_statics()
@@ -72,7 +76,7 @@ namespace DialogueQuest
 
         #region Other
 
-        public static string Hash(string data)
+        private static string Hash(string data)
         {
             var sb = new StringBuilder();
             using (var hash = SHA256.Create())

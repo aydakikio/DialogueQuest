@@ -162,8 +162,8 @@ namespace DialogueQuest.Elements
             return Drop_Down;
         }
 
-        public void On_Delete()
-        {
+        public void On_Delete() 
+        { //Removes the deleting node on graph data base
             
         }
 
