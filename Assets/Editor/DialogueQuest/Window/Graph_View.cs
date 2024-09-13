@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using DialogueQuest;
 using DialogueQuest.Elements;
@@ -7,15 +6,12 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DialogueQuest.Enumerations;
-using DialogueQuest.Utilities;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 
 namespace Dialogue_Quest.Window
 {
     public class Graph_View : GraphView
     {
-        private int total_nodes_number = 0;
         
         private string temp_folder_name;
         private Graph_Static_handeler static_handler;
@@ -54,7 +50,6 @@ namespace Dialogue_Quest.Window
         private Node Create_Node(Vector2 position , string parnent_node_type , Node_Types Node_type)
         {
 
-            total_nodes_number = total_nodes_number + 1;
             
             //For special nodes
             if (parnent_node_type.ToLower() == "special")
@@ -133,6 +128,7 @@ namespace Dialogue_Quest.Window
         {
             StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Assets/Editor Default Resources/UIVariables/Graph_style.uss");
             styleSheets.Add(styleSheet);
+            
         }
         
         #endregion
@@ -141,11 +137,9 @@ namespace Dialogue_Quest.Window
 
         public string get_total_nodes_number()
         { 
-            return total_nodes_number.ToString();
+            return this.nodes.ToString();//Beta
         }
         
-        
-
         #endregion
     }
 }

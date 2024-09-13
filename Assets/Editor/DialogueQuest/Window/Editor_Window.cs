@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using DialogueQuest;
 using DialogueQuest.Utilities;
+using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Search;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
@@ -130,7 +131,7 @@ namespace Dialogue_Quest.Window
         }
 
         #endregion
-        
+
         
     }
 }

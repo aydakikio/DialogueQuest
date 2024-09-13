@@ -14,13 +14,15 @@ namespace DialogueQuest.Data
         [field:SerializeField] [field: TextArea() ] public string Dialogue { get; set; } // Dialogue Text
         [field:SerializeField] public List<Flag_Data> Flag_Infos { get; set; }
         [field:SerializeField] public List<Choice_Data> Choices { get; set; }
-        public void Instance(string Name , Node_Types Type , string dialogue , List<Flag_Data> flag_infos,List<Choice_Data> choices)
+        [field:SerializeField]public Vector2 Node_Position { get; set; }
+        public void Instance(string Name , Node_Types Type , string dialogue , List<Flag_Data> flag_infos,List<Choice_Data> choices , Vector2 position)
         {
             name = Name;
             type = Type;
             Dialogue = dialogue;
             Flag_Infos = flag_infos;
             Choices = choices;
+            Node_Position = position;
         }
     }
 }
