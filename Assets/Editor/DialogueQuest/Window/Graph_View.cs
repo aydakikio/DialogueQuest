@@ -187,7 +187,33 @@ namespace Dialogue_Quest.Window
         }
         
         #endregion
+
+        #region Graph search /!\ Caution: This is beta methods It may have bugs!!!!!!
+
+        public List<Basic_Node> Search_The_Graph(string value)
+        {
+            List<Basic_Node> found_basic_nodes = new List<Basic_Node>();
+            
+            foreach (Basic_Node node in this.Children())
+            {
+                if (node.Node_name.Contains(value) == true)
+                {
+                    found_basic_nodes.Add(node);
+                }
+            }
+
+            if (found_basic_nodes.Count != 0)
+            {
+                return found_basic_nodes;
+            }
+            
+            
+            Debug.Log($" Your Search - {value} - did not match any node name ");
+
+            return null;
+        }
         
+        #endregion
     }
 }
 
