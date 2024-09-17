@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DialogueQuest;
 using DialogueQuest.Elements;
 using UnityEditor.Experimental.GraphView;
@@ -67,7 +68,7 @@ namespace Dialogue_Quest.Window
         
         #endregion
         
-        #region Port Check
+        #region Port Check & Port Delete
 
         public override List<Port> GetCompatiblePorts(Port Start_Port, NodeAdapter Node_Adapter)
         {
@@ -95,7 +96,7 @@ namespace Dialogue_Quest.Window
             return Compatible_ports;
             
         }
-
+        
         #endregion
         
         
@@ -127,9 +128,66 @@ namespace Dialogue_Quest.Window
         private void Search_the_graph()
         {
             //this.CollectElements();
-            this.Fi
+            
         }
+        
+        
         #endregion
+
+        #region Graph Elements Remove
+        
+        
+        private void On_Graph_Elements_Delete()
+        {
+             
+            deleteSelection = (operationName, askUser) =>
+            {
+                Type edge_type = typeof(Edge);
+                
+                List<Basic_Node> Basic_Nodes_To_Delete = new List<Basic_Node>();
+                List<Edge> Edges_To_Delete = new List<Edge>();
+
+                foreach (GraphElement selected_Element in selection)
+                {
+                    if (selected_Element is Basic_Node node)//Make it Sepearate for Basic Nodes
+                    {
+                        Basic_Nodes_To_Delete.Add(node);
+                        
+                        continue;
+                    }
+
+                    if (selected_Element.GetType() == typeof(Edge))
+                    {
+                        Edge edge = (Edge)selected_Element;
+                        
+                        Edges_To_Delete.Add(edge);
+                        
+                        continue;
+                    }
+                    
+                }
+                
+                DeleteElements(Edges_To_Delete);
+                
+                foreach (Basic_Node node_To_remove in Basic_Nodes_To_Delete)
+                {
+                    Remove_Basic_Node(node_To_remove);
+                    node_To_remove.Disconnect_All_Ports();
+                    
+                    Remove(node_To_remove);
+                }
+               
+            };
+        }
+
+        private void Remove_Basic_Node(Basic_Node node)
+        {
+            string node_name = node.Node_name.ToLower();
+            
+        }
+        
+        #endregion
+        
     }
 }
 

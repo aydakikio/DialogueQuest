@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Dialogue_Quest.Window;
 using DialogueQuest.Data;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
@@ -10,14 +11,16 @@ namespace DialogueQuest.Elements
 {
     public class Basic_Node : Root_Node
     {
-        private Root_Node root = new Root_Node();
         public string Node_name { get; set; }
         public string Dialogue { get; set; }
         
         public string ID { get; set; }
         
-        private int repeat_time = 1;
-        private int time = 1;
+        private int Flag_Count_num = 1;
+        
+        private int input_count_num = 1;
+
+        protected Graph_View graph;
         
         #region Flag resourses
 
@@ -74,7 +77,7 @@ namespace DialogueQuest.Elements
             
             //Basic input
             Port Base_input = this.Create_Port(Orientation.Horizontal , Direction.Input,Port.Capacity.Multi );
-            Base_input.portName = $"In {time} ";
+            Base_input.portName = $"In {input_count_num} ";
             
             //Create Dialogue Box
             VisualElement Dialogue_box = new VisualElement();
@@ -98,6 +101,13 @@ namespace DialogueQuest.Elements
             
         }
         
+        private DropdownField Create_Drop_Down()
+        {
+            var Drop_Down = new DropdownField(null ,new List<string>{ "ADD ITEM", "Input","Flag"} , 0);
+            
+            return Drop_Down;
+        }
+        
         #endregion
 
         #region Flag
@@ -107,7 +117,7 @@ namespace DialogueQuest.Elements
             Flag_Data flag = new Flag_Data();
             Flags_private.Add(flag);
             
-            var Flag_Name = Element_Utilities.Create_TextField($"Flag{repeat_time}", Flag);
+            var Flag_Name = Element_Utilities.Create_TextField($"Flag{Flag_Count_num}", Flag);
             Flag_Name.MarkDirtyRepaint();
 
             Flag_Name.RegisterValueChangedCallback(Event => { flag.Flag_text = Event.newValue; });
@@ -123,7 +133,7 @@ namespace DialogueQuest.Elements
             Flag_Fold_Out.MarkDirtyRepaint();
             extensionContainer.Add(Flag_Fold_Out);
             
-            repeat_time++;
+            Flag_Count_num++;
         }
 
         private void Delete_Flag(Flag_Data flag_item)
@@ -138,15 +148,15 @@ namespace DialogueQuest.Elements
         }
         
         #endregion
-        
 
-        #region Other
+        #region Port Management
+
         
         private void Add_Input()
         {
-            time++;
+            input_count_num++;
             Port input = this.Create_Port( Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
-            input.portName = $"In {time} ";
+            input.portName = $"In {input_count_num} ";
             
             inputContainer.Add(input);
             
@@ -154,20 +164,38 @@ namespace DialogueQuest.Elements
             
 
         }
-        
-        private DropdownField Create_Drop_Down()
+
+        public void Disconnect_All_Ports()
         {
-            var Drop_Down = new DropdownField(null ,new List<string>{ "ADD ITEM", "Input","Flag"} , 0);
-            
-            return Drop_Down;
+            Disconnect_Inputs();
+            Disconnect_Outputs();
         }
 
-        public void On_Delete() 
-        { //Removes the deleting node on graph data base
-            
+        private void Disconnect_Inputs()
+        {
+            Disconnect_Ports(inputContainer);
         }
 
+        private void Disconnect_Outputs()
+        {
+            Disconnect_Ports(outputContainer);
+        }
+
+        private void Disconnect_Ports(VisualElement port_Container)
+        {
+            foreach (Port port in port_Container.Children())
+            {
+                if (!port.connected)
+                {
+                    continue;
+                }
+                graph.DeleteElements(port.connections);
+                
+            }
+        }
+        
         #endregion
+        
         
     }
 }
