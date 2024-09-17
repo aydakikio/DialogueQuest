@@ -13,10 +13,6 @@ namespace Dialogue_Quest.Window
     public class Graph_View : GraphView
     {
         
-        private string temp_folder_name;
-        private Graph_Static_handeler static_handler;
-        
-        
         public Graph_View()
         {
             Add_Grid_Background();
@@ -102,18 +98,6 @@ namespace Dialogue_Quest.Window
 
         #endregion
         
-        #region Graph Statics
-
-        private void Create_Graph_Statics(int mode)
-        {
-            static_handler = new Graph_Static_handeler();
-
-            temp_folder_name = static_handler.create_graph_static();
-            
-        }
-        
-
-        #endregion
         
         #region UI
 
@@ -139,7 +123,12 @@ namespace Dialogue_Quest.Window
         { 
             return this.nodes.ToString();//Beta
         }
-        
+
+        private void Search_the_graph()
+        {
+            //this.CollectElements();
+            this.Fi
+        }
         #endregion
     }
 }
