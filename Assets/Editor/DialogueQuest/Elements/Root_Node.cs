@@ -20,50 +20,7 @@ namespace DialogueQuest.Elements
             return Node_ID;
         }
         #endregion
-
-        #region Accessing And Manging Graph Statics
-
-        public void get_name(string graph_name , string temp_name = null)
-        {
-            if (AssetDatabase.IsValidFolder($"Assets/Dialogue_Manager/Save/{graph_name}") == true && temp_name == null)
-            {
-                Connect_to_static(graph_name);
-                return;
-            }
-            
-            Connect_to_static(temp_name);
-        }
-
-        private void Connect_to_static(string file_name)
-        {
-            //var static = new Sqlit
-        }
-
-        public void Insert_Node_name()
-        {
-            
-        }
-
-        public void Insert_Node_Id()
-        {
-            
-        }
-
-        #endregion
-
         
-        #region Manging Start Points
-        public void Add_start_points(string node_name , string ID)
-        {
-            //Be completed in future 
-        }
-
-        public void Remove_start_points()
-        {
-            
-        }
-        
-        #endregion
        
     }
 }

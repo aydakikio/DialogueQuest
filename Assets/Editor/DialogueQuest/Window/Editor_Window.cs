@@ -24,6 +24,9 @@ namespace Dialogue_Quest.Window
         private int current_search_index = 0;
         private List<Basic_Node> founded_nodes = new List<Basic_Node>();
         
+        //List of nodes
+        //List of start points 
+        
         [MenuItem("Window/Dialogue_Quest")]    
         public static void ShowExample()
         {
@@ -62,8 +65,8 @@ namespace Dialogue_Quest.Window
             });
             
             //Toolbar Buttons
-            Save_button = Element_Utilities.Create_Button("Save");
-            Button Load_button = Element_Utilities.Create_Button("Load");
+            Save_button = Element_Utilities.Create_Button("Save" , ()=> save());
+            Button Load_button = Element_Utilities.Create_Button("Load" , ()=> load());
             
             //Node count info 
             Label space_between_save_panel_and_Graph_status = new Label("                "); //Between Save panel and graph status
@@ -167,6 +170,21 @@ namespace Dialogue_Quest.Window
             
             current_search_index--;
         }
+
+        #endregion
+
+        #region Save & Load
+
+        private void save()
+        {
+            
+        }
+
+        private void load()
+        {
+            
+        }
+        
 
         #endregion
     }

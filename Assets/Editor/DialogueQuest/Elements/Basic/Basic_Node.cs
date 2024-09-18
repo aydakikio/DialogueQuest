@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Dialogue_Quest.Window;
 using DialogueQuest.Data;
+using DialogueQuest.Enumerations;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
 using UnityEditor.Experimental.GraphView;
@@ -15,6 +16,9 @@ namespace DialogueQuest.Elements
         public string Dialogue { get; set; }
         
         public string ID { get; set; }
+        public List<Choice_Data> choices { get; set; }
+        
+        public Node_Types type { get; set; }
         
         private int Flag_Count_num = 1;
         

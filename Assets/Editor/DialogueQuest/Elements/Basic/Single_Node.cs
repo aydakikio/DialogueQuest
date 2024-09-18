@@ -9,12 +9,12 @@ namespace DialogueQuest.Elements
 {
     public class Single_Node : Basic_Node
     {
-        private Node_Types node_types = Node_Types.Single_Node;
         private int time = 1;
         
         public override void Initialize(Vector2 position)
         {
             base.Initialize(position);
+            type = Node_Types.Single_Node;
         }
 
         public override void draw()

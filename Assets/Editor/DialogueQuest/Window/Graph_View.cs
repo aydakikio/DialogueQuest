@@ -176,6 +176,7 @@ namespace Dialogue_Quest.Window
                     
                     Remove(node_To_remove);
                 }
+                
                
             };
         }
