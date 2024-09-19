@@ -14,7 +14,10 @@ namespace DialogueQuest.Elements
         public override void Initialize(Vector2 position)
         {
             base.Initialize(position);
+
             type = Node_Types.Single_Node;
+
+
         }
 
         public override void draw()

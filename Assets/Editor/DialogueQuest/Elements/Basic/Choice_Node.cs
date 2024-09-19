@@ -9,11 +9,12 @@ namespace DialogueQuest.Elements
 {
     public class Choice_Node : Basic_Node
     {
-        private Node_Types node_type = Node_Types.Choice_Node;
 
         public override void Initialize(Vector2 position)
         {
             base.Initialize(position);
+
+
             type = Node_Types.Choice_Node;
         }
 
@@ -58,5 +59,6 @@ namespace DialogueQuest.Elements
             choices.Remove(data);
             outputContainer.Remove(panel);
         }
+        
     }
 }

@@ -14,11 +14,10 @@ namespace DialogueQuest.Elements
     {
         public string Node_name { get; set; }
         public string Dialogue { get; set; }
-        
+        public Node_Types type { get; set; }
         public string ID { get; set; }
         public List<Choice_Data> choices { get; set; }
         
-        public Node_Types type { get; set; }
         
         private int Flag_Count_num = 1;
         

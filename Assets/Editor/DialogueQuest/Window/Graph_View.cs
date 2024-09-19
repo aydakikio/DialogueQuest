@@ -118,21 +118,7 @@ namespace Dialogue_Quest.Window
         
         #endregion
 
-        #region Other
 
-        public string get_total_nodes_number()
-        { 
-            return this.nodes.ToString();//Beta
-        }
-
-        private void Search_the_graph()
-        {
-            //this.CollectElements();
-            
-        }
-        
-        
-        #endregion
 
         #region Graph Elements Remove
         
@@ -183,7 +169,7 @@ namespace Dialogue_Quest.Window
 
         private void Remove_Basic_Node(Basic_Node node)
         {
-            string node_name = node.Node_name.ToLower();
+            //string node_name = node.Node_name.ToLower();
             
         }
         
@@ -195,11 +181,12 @@ namespace Dialogue_Quest.Window
         {
             List<Basic_Node> found_basic_nodes = new List<Basic_Node>();
             
-            foreach (Basic_Node node in this.Children())
+            foreach (Basic_Node node in this.nodes )
             {
                 if (node.Node_name.Contains(value) == true)
                 {
                     found_basic_nodes.Add(node);
+                    Debug.Log(node.Node_name);
                 }
             }
 
@@ -215,6 +202,19 @@ namespace Dialogue_Quest.Window
         }
         
         #endregion
+        
+        
+        #region Other
+
+        public string get_total_nodes_number()
+        {
+            return this.nodes.Count().ToString();
+        }
+
+        
+        
+        #endregion
+        
     }
 }
 
