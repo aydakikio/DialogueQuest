@@ -76,19 +76,19 @@ namespace Dialogue_Quest.Window
             totoal_number = new Label(graph.get_total_nodes_number());
             
             //Search Bar 
-            Label space_between_search_field_and_graph_status = new Label("                                   ");
+            Label space_between_search_field_and_graph_status = new Label("        ");
             
-            TextField search_field = Element_Utilities.Create_TextField("Search: " ,"Search Here! " );
+            TextField search_field = Element_Utilities.Create_TextField("" ,"Search Here! " );
             search_field.MarkDirtyRepaint();
             
             Button search_button = Element_Utilities.Create_Button("Search" , ()=>search(search_field.value));
 
             //Result Panel
-            Label space_between_searchbar_and_result_panel = new Label("          ");
+            Label space_between_searchbar_and_result_panel = new Label("                  ");
 
             Button previous_button = Element_Utilities.Create_Button("Previous" , ()=>previous_item_in_search_results());
 
-            Label space_between_buttons = new Label("     ");
+            Label space_between_buttons = new Label("   ");
             Button next_button = Element_Utilities.Create_Button("Next" , ()=> next_item_in_search_results() );
             
             //Insert UI Elements to Toolbar
@@ -138,38 +138,50 @@ namespace Dialogue_Quest.Window
         {
             founded_nodes.Clear();
             founded_nodes = graph.Search_The_Graph(value);
+            current_search_index = 0;
         }
 
         private void next_item_in_search_results()
         {
-            Basic_Node node = founded_nodes[current_search_index];
-            this.position = node.GetPosition();
+            current_search_index++;
+            Basic_Node node;
             
             //Changes style to result style
 
             
             if (current_search_index >= founded_nodes.Count)
             {
-                current_search_index = 0;
-                return;
+                node = founded_nodes[0];
+                graph.zoom_in_found_node(node);
+                //Changes style to result style
                 
+                return;
             } 
-            current_search_index++;
+            node = founded_nodes[current_search_index];
+            graph.zoom_in_found_node(node);
+            
         }
 
         private void previous_item_in_search_results()
         {
-            Basic_Node node = founded_nodes[current_search_index - 1];
-            this.position = node.GetPosition();
+            current_search_index--;
+            Basic_Node node;
+            if (current_search_index < 1 )
+            {
+                int index = founded_nodes.Count - 1;
+                node = founded_nodes[index];
+                graph.zoom_in_found_node(node);
+                
+                //Changes style to result style
+                
+                return;
+            }
+            
+            node = founded_nodes[current_search_index];
+            graph.zoom_in_found_node(node);
             
             //Changes style to result style
             
-            if (current_search_index < 0 )
-            {
-                current_search_index = founded_nodes.Count - 1;
-            }
-            
-            current_search_index--;
         }
 
         #endregion

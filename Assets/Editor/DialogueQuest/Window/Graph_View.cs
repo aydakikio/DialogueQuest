@@ -49,7 +49,7 @@ namespace Dialogue_Quest.Window
 
             
             //For special nodes
-            if (parnent_node_type.ToLower() == "special")
+            if (parnent_node_type.ToLower() == "control")
             {
                 
             }
@@ -180,13 +180,13 @@ namespace Dialogue_Quest.Window
         public List<Basic_Node> Search_The_Graph(string value)
         {
             List<Basic_Node> found_basic_nodes = new List<Basic_Node>();
+            found_basic_nodes.Clear();
             
             foreach (Basic_Node node in this.nodes )
             {
                 if (node.Node_name.Contains(value) == true)
                 {
                     found_basic_nodes.Add(node);
-                    Debug.Log(node.Node_name);
                 }
             }
 
@@ -200,6 +200,13 @@ namespace Dialogue_Quest.Window
 
             return null;
         }
+
+        public void zoom_in_found_node(Node node)
+        {
+            FrameAll();
+            Vector3 xx = node.GetPosition().center;
+            UpdateViewTransform( xx , Vector3.one );
+        }
         
         #endregion
         
@@ -210,7 +217,6 @@ namespace Dialogue_Quest.Window
         {
             return this.nodes.Count().ToString();
         }
-
         
         
         #endregion
