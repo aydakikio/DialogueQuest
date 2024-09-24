@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using DialogueQuest.Data;
 using DialogueQuest.Enumerations;
 using UnityEngine;
 
-namespace DialogueQuest.Data
+namespace DialogueQuest.scriptable_object
 {
     [Serializable]
     public class Basic_Nodes : ScriptableObject

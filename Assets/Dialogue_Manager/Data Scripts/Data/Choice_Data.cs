@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using DialogueQuest;
+using DialogueQuest.scriptable_object;
 
 namespace DialogueQuest.Data
 {
