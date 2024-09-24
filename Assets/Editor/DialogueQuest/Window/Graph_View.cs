@@ -175,8 +175,9 @@ namespace Dialogue_Quest.Window
         
         #endregion
 
-        #region Graph search /!\ Caution: This is beta methods It may have bugs!!!!!!
-
+        #region Graph search  --> /!\ Caution: Disabled due to problems! !!!!!!
+        
+        /*
         public List<Basic_Node> Search_The_Graph(string value)
         {
             List<Basic_Node> found_basic_nodes = new List<Basic_Node>();
@@ -207,6 +208,8 @@ namespace Dialogue_Quest.Window
             Vector3 xx = node.GetPosition().center;
             UpdateViewTransform( xx , Vector3.one );
         }
+        
+        */
         
         #endregion
         

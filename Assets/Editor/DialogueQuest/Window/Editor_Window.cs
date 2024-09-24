@@ -81,15 +81,19 @@ namespace Dialogue_Quest.Window
             TextField search_field = Element_Utilities.Create_TextField("" ,"Search Here! " );
             search_field.MarkDirtyRepaint();
             
+            /*  /!\ Caution: Disabled due to problems! 
             Button search_button = Element_Utilities.Create_Button("Search" , ()=>search(search_field.value));
 
             //Result Panel
             Label space_between_searchbar_and_result_panel = new Label("                  ");
+            
 
             Button previous_button = Element_Utilities.Create_Button("Previous" , ()=>previous_item_in_search_results());
 
             Label space_between_buttons = new Label("   ");
             Button next_button = Element_Utilities.Create_Button("Next" , ()=> next_item_in_search_results() );
+            
+            */
             
             //Insert UI Elements to Toolbar
             toolbar.Insert(0,file_name_field);
@@ -102,12 +106,15 @@ namespace Dialogue_Quest.Window
             
             toolbar.Insert(6,space_between_search_field_and_graph_status);
             toolbar.Insert(7,search_field);
+            
+            /*  /!\ Caution: Disabled due to problems! 
             toolbar.Insert(8, search_button);
             
             toolbar.Insert(9, space_between_searchbar_and_result_panel);
             toolbar.Insert(10,previous_button);
             toolbar.Insert(11, space_between_buttons);
             toolbar.Insert(12 , next_button);
+            */
             
             rootVisualElement.Add(toolbar);
         }
@@ -132,8 +139,8 @@ namespace Dialogue_Quest.Window
         
         #endregion
 
-        #region Search_graph
-
+        #region Search_graph --> /!\ Caution: Disabled due to problems! 
+        /*
         private void search(string value)
         {
             founded_nodes.Clear();
@@ -184,7 +191,10 @@ namespace Dialogue_Quest.Window
             
         }
 
+            */
+        
         #endregion
+        
 
         #region Save & Load
 
