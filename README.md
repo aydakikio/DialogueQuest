@@ -1,16 +1,45 @@
 ![Dialogue Quest](./Logo/DialogueQuest.jpg)
 
-# Features
+DialogueQuest is a powerful and flexible dialogue management system for Unity, designed to streamline the creation of interactive narratives in your games.
 
-Comming soon!
+## Features
 
+- Visual node-based dialogue editor
+- Support for various node types:
+  - Single Node: For linear dialogue sequences
+  - Choice Node: For branching conversations with multiple options
+  - Quit Node: To end dialogue sequences
+- Flag system for tracking story progress and character relationships
+- Seamless integration with Unity's Animator component for character animations
+- Search functionality to quickly find nodes in complex dialogue trees
+- Easy-to-use toolbar for saving, loading, and managing dialogue graphs
 
-# Installation and first Setup
+## Installation and Setup
 
-Comming Soon!
+1. Clone this repository or download the latest release.
+2. Import the DialogueQuest folder into your Unity project's Assets directory.
+3. Open the Dialogue Quest Editor window by navigating to Window > Dialogue_Quest in the Unity menu.
 
+## How to Use
 
+1. Create a new dialogue graph by entering a name in the "File Name" field and clicking "Save".
+2. Add nodes to your graph by right-clicking in the editor and selecting the desired node type.
+3. Connect nodes by clicking and dragging from one node's output port to another node's input port.
+4. Edit node properties, such as dialogue text and choices, in the node inspector.
+5. Use flags to track variables and create conditional branching in your dialogues.
+6. Save your work frequently using the "Save" button in the toolbar.
 
+## Node Types
+
+- **Single Node**: Used for linear dialogue sequences. Can have multiple inputs and outputs.
+- **Choice Node**: Represents branching points in the conversation. Allows for multiple choice options.
+- **Quit Node**: Marks the end of a dialogue sequence.
+
+## Advanced Features
+
+- **Animations**: Integrate character animations with dialogue using the Animation_Data class.
+- **Scene Integration**: Use the Scene_Vision class to easily access GameObjects and Animators in your scene.
+- **Search**: Quickly find nodes in large dialogue trees using the search functionality.
 # How to Contribute
 
 We’re building Dialogue Quest together with our community, and we’re always glad to have new contributors on board. Here’s how you can get involved and help us along the way:
@@ -51,6 +80,6 @@ Donation Ways:
      Thank you for being a part of our community and for your generous support. Together, we can make game development tools accessible to everyone!
    
 
-#  Lisence 
+#  Licence 
  Dialogue Quest is released under the GPL-3.0 License. For more information see [LICENSE](https://github.com/aydakikio/DialogueQuest/blob/main/LICENSE).
 
