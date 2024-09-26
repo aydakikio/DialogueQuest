@@ -75,24 +75,25 @@ namespace Dialogue_Quest.Window
             Label status_label = new Label("  Nodes: ");
             totoal_number = new Label(graph.get_total_nodes_number());
             
-            //Search Bar 
+            /*  /!\ Caution: Disabled due to problems!
+             
+            //Search Bar
             Label space_between_search_field_and_graph_status = new Label("        ");
-            
+
             TextField search_field = Element_Utilities.Create_TextField("" ,"Search Here! " );
             search_field.MarkDirtyRepaint();
-            
-            /*  /!\ Caution: Disabled due to problems! 
+
             Button search_button = Element_Utilities.Create_Button("Search" , ()=>search(search_field.value));
 
             //Result Panel
             Label space_between_searchbar_and_result_panel = new Label("                  ");
-            
+
 
             Button previous_button = Element_Utilities.Create_Button("Previous" , ()=>previous_item_in_search_results());
 
             Label space_between_buttons = new Label("   ");
             Button next_button = Element_Utilities.Create_Button("Next" , ()=> next_item_in_search_results() );
-            
+
             */
             
             //Insert UI Elements to Toolbar
@@ -104,17 +105,18 @@ namespace Dialogue_Quest.Window
             toolbar.Insert(4,status_label);
             toolbar.Insert(5, totoal_number );
             
-            toolbar.Insert(6,space_between_search_field_and_graph_status);
-            toolbar.Insert(7,search_field);
             
-            /*  /!\ Caution: Disabled due to problems! 
-            toolbar.Insert(8, search_button);
-            
-            toolbar.Insert(9, space_between_searchbar_and_result_panel);
-            toolbar.Insert(10,previous_button);
-            toolbar.Insert(11, space_between_buttons);
-            toolbar.Insert(12 , next_button);
-            */
+            /*  /!\ Caution: Disabled due to problems!
+          toolbar.Insert(6,space_between_search_field_and_graph_status);
+          toolbar.Insert(7,search_field);
+
+          toolbar.Insert(8, search_button);
+
+          toolbar.Insert(9, space_between_searchbar_and_result_panel);
+          toolbar.Insert(10,previous_button);
+          toolbar.Insert(11, space_between_buttons);
+          toolbar.Insert(12 , next_button);
+          */
             
             rootVisualElement.Add(toolbar);
         }

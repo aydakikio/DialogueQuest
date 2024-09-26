@@ -14,7 +14,6 @@ namespace Dialogue_Quest.Window
 {
     public class Graph_View : GraphView
     {
-        private List<Basic_Nodes> graph_base_nodes = new List<Basic_Nodes>();
         public Graph_View()
         {
             Add_Grid_Background();
@@ -172,6 +171,8 @@ namespace Dialogue_Quest.Window
         {
             //string node_name = node.Node_name.ToLower();
             //graph_base_nodes.Remove(node);
+            
+            
         }
         
         #endregion

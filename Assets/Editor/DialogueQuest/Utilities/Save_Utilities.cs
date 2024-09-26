@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Dialogue_Quest.Window;
 using DialogueQuest.Data;
 using DialogueQuest.Elements;
+using DialogueQuest.scriptable_object;
 using UnityEditor;
 
 namespace DialogueQuest.Utilities
@@ -13,13 +14,16 @@ namespace DialogueQuest.Utilities
         private static List<Basic_Node> basic_nodes;
         private static List<Base_Control_Node> control_nodes;
 
+        
+
         #region Main functions
         
         public static void Save()
         {
             
             Create_Save_Folder();
-            
+            Get_Graph_Elements();
+            save_basic_nodes();
         }
 
         public static void Load()
@@ -46,7 +50,22 @@ namespace DialogueQuest.Utilities
         
         private static void save_basic_nodes()
         {
-            
+            foreach (Basic_Node node in basic_nodes)
+            {
+                Basic_Nodes node_container = new Basic_Nodes();
+                
+                node_container.Id = node.ID;
+                node_container.name = node.Node_name;
+                node_container.type = node.type;
+                
+                node_container.Dialogue = node.Dialogue;
+                
+                node_container.Flag_Infos = node.Flags as List<Flag_Data>;
+                node_container.Choices = Save_Choices(node.choices);
+                
+                node_container.Node_Position = node.GetPosition().position;
+                
+            }            
         }
 
         private static List<Choice_Data> Save_Choices(List<Choice_Data> current_choices)
