@@ -22,8 +22,8 @@ namespace Dialogue_Quest.Window
 
         private Label totoal_number;
         
-        private int current_search_index = 0;
-        private List<Basic_Node> founded_nodes = new List<Basic_Node>();
+        //private int current_search_index = 0;
+        //private List<Basic_Node> founded_nodes = new List<Basic_Node>();
         
         //List of nodes
         //List of start points 

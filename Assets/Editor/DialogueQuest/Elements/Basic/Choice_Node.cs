@@ -22,43 +22,43 @@ namespace DialogueQuest.Elements
         {
             base.draw();
 
-            Button Add_Choice = Element_Utilities.Create_Button("Add Choice" , () => Create_Choice_Port());
+            Button Add_Choice = Element_Utilities.Create_Button("Add Choice" , () =>
+            {
+                Choice_Data data = new Choice_Data() { Choice_Text = "New Choice" };
+                choices.Add(data);
+                Port port = Create_Choice_Port(data);
+                outputContainer.Add(port);
+            });
             
             mainContainer.Insert(1 , Add_Choice);
-        }
-
-        private void Create_Choice_Port()
-        {
-            Choice_Data choice_data = new Choice_Data(){Choice_Text = "New Choice"};
-            choices.Add(choice_data);
             
-            VisualElement choice_panel = new VisualElement();
-            
-            Port out_put = this.Create_Port(Orientation.Horizontal, Direction.Output , Port.Capacity.Multi);
-
-            Button choice_delete_button = Element_Utilities.Create_Button("X", ()=> {delete_choice_port(out_put, choice_panel , choice_data ); });
-
-            TextField choice_text_field = Element_Utilities.Create_TextField("", "New Choice",
-                callback => { choice_data.Choice_Text = callback.newValue; });
-            
-            
-            choice_panel.Insert(0, choice_delete_button);
-            choice_panel.Insert(1,choice_text_field);
-            choice_panel.Insert(2 , out_put);
-            
-            outputContainer.Add(choice_panel);
-
             RefreshExpandedState();
         }
 
-        private void delete_choice_port(Port port , VisualElement panel , Choice_Data data)
+        private Port Create_Choice_Port(object data)
         {
-            if (choices.Count == 1) return;
-            if (port.connected)  graph.DeleteElements(port.connections);
+            Port out_put = this.Create_Port(Orientation.Horizontal, Direction.Output , Port.Capacity.Multi);
+            out_put.userData = data;
+            Choice_Data choice = (Choice_Data)  data;
             
-            choices.Remove(data);
-            outputContainer.Remove(panel);
+            Button choice_delete_button = Element_Utilities.Create_Button("X", () =>
+            {
+                if (choices.Count == 1) return;
+                if (out_put.connected) foreach (var connection in out_put.connections) out_put.Disconnect(connection);
+                
+                choices.Remove(choice);
+                graph.RemoveElement(out_put);
+            });
+
+            TextField choice_text_field = Element_Utilities.Create_TextField("", "New Choice",
+                callback => { choice.Choice_Text = callback.newValue; });
+            
+            
+            out_put.Insert(0, choice_delete_button);
+            out_put.Insert(1,choice_text_field);
+            out_put.Insert(2 , out_put);
+            
+            return out_put;
         }
-        
     }
 }

@@ -15,10 +15,13 @@ namespace DialogueQuest.Elements
 
         public override void Draw()
         {
+            base.Draw();
+            
             Texture2D Quit_picture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor Default Resources/Images/exit_sign.png");
-            VisualElement Quit_picture_container = new VisualElement();
-            Quit_picture_container.style.backgroundImage = Quit_picture;
-            outputContainer.Add(Quit_picture_container);
+
+            Image Picture_Container = new Image() { image = Quit_picture , style = { width = Quit_picture.width , height = Quit_picture.height }};
+            
+            outputContainer.Add(Picture_Container);
         }
        
     }
