@@ -12,7 +12,7 @@ namespace DialogueQuest.Utilities
         private static Graph_View graph; 
         
         private static List<Basic_Node> basic_nodes;
-        private static List<Base_Control_Node> control_nodes;
+        private static List<Control_Base_Node> control_nodes;
 
         
 
@@ -93,7 +93,7 @@ namespace DialogueQuest.Utilities
                     return;
                 }
 
-                if (element is Base_Control_Node control_node)
+                if (element is Control_Base_Node control_node)
                 {
                     control_nodes.Add(control_node);
                     

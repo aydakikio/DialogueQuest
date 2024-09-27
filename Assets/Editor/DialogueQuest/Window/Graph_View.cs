@@ -29,12 +29,13 @@ namespace Dialogue_Quest.Window
             //Create ADD Node Menu
             this.AddManipulator(Create_Contextal_Menu("Add Node (Single Node) " , "Basic" , Node_Types.Single_Node));
             this.AddManipulator(Create_Contextal_Menu("Add Node (Choice Node) " , "Basic" , Node_Types.Choice_Node));
-            
+            this.AddManipulator(Create_Contextal_Menu("Add Node (Quit Node)" ,"control" , Node_Types.Quit_Node));
             
             //Set other manipulators
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new SelectionDragger());
+            this.AddManipulator(new ContentDragger());
         }
 
         #region Node Creation & Menu Manipulators
@@ -48,10 +49,16 @@ namespace Dialogue_Quest.Window
         {
 
             
-            //For special nodes
+            //For Control nodes
             if (parnent_node_type.ToLower() == "control")
             {
-                
+                Type control_node_type = Type.GetType($"DialogueQuest.Elements.{Node_type}");
+
+                Control_Base_Node control_node = (Control_Base_Node)Activator.CreateInstance(control_node_type);
+                control_node.Initialize(position);
+                control_node.Draw();
+
+                return control_node;
             }
             
             // For Basic nodes
