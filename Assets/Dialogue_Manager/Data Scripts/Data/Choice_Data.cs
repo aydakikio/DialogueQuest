@@ -9,6 +9,6 @@ namespace DialogueQuest.Data
     public class Choice_Data
     {
         [field:SerializeField] public string Choice_Text { get; set; }
-        [field:SerializeField] public Basic_Nodes Next_Saved_Node { get; set; } 
+        [field:SerializeField] public Basic_Node_Save NextSavedNodeSave { get; set; } 
     }
 }

@@ -17,10 +17,13 @@ namespace DialogueQuest.Elements
         {
             base.Draw();
             
+            Label node_title = new Label("Quit Node");
+            
             Texture2D Quit_picture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor Default Resources/Images/exit_sign.png");
-
             Image Picture_Container = new Image() { image = Quit_picture , style = { width = Quit_picture.width , height = Quit_picture.height }};
             
+            //Insert values to GUI
+            titleContainer.Add(node_title);
             outputContainer.Add(Picture_Container);
         }
        

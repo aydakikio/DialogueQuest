@@ -7,7 +7,7 @@ using UnityEngine;
 namespace DialogueQuest.scriptable_object
 {
     [Serializable]
-    public class Basic_Nodes : ScriptableObject
+    public class Basic_Node_Save : ScriptableObject
     {
         [field:SerializeField] public string Id { get; set; }
         [field:SerializeField] public string name { get; set; } //Node Name

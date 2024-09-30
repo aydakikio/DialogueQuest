@@ -52,18 +52,18 @@ namespace DialogueQuest.Utilities
         {
             foreach (Basic_Node node in basic_nodes)
             {
-                Basic_Nodes node_container = new Basic_Nodes();
+                Basic_Node_Save nodeSaveContainer = new Basic_Node_Save();
                 
-                node_container.Id = node.ID;
-                node_container.name = node.Node_name;
-                node_container.type = node.type;
+                nodeSaveContainer.Id = node.ID;
+                nodeSaveContainer.name = node.Node_name;
+                nodeSaveContainer.type = node.type;
                 
-                node_container.Dialogue = node.Dialogue;
+                nodeSaveContainer.Dialogue = node.Dialogue;
                 
-                node_container.Flag_Infos = node.Flags as List<Flag_Data>;
-                node_container.Choices = Save_Choices(node.choices);
+                nodeSaveContainer.Flag_Infos = node.Flags as List<Flag_Data>;
+                nodeSaveContainer.Choices = Save_Choices(node.choices);
                 
-                node_container.Node_Position = node.GetPosition().position;
+                nodeSaveContainer.Node_Position = node.GetPosition().position;
                 
             }            
         }

@@ -4,8 +4,9 @@ namespace DialogueQuest.Logic
 {
     public class Scene_Vision : MonoBehaviour
     {
-        public GameObject game_object { get; private set; }
-        public Animator animator { get; private set; }
+        //This class will be completed after developing main features of Dialogue System
+        private GameObject game_object;
+        private Animator animator;
 
         public static Animator Get_Animator(string object_name)
         {

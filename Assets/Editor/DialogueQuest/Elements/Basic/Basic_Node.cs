@@ -31,8 +31,7 @@ namespace DialogueQuest.Elements
             
            private string Flag = "New Flag";
 
-           private List<Flag_Data> Flags_private = new List<Flag_Data>();
-           public IReadOnlyCollection<Flag_Data> Flags => Flags_private;
+           public List<Flag_Data> Flags { get; set; }
            
         #endregion
        
@@ -43,7 +42,8 @@ namespace DialogueQuest.Elements
             Node_name = "New Node";
 
             ID = Assign_ID();
-             
+            choices = new List<Choice_Data>();
+            Flags = new List<Flag_Data>();
             
             Dialogue = "Dialgue Text";
             
@@ -118,7 +118,7 @@ namespace DialogueQuest.Elements
         private void ADD_Flag()
         {
             Flag_Data flag = new Flag_Data();
-            Flags_private.Add(flag);
+            Flags.Add(flag);
             
             var Flag_Name = Element_Utilities.Create_TextField($"Flag{Flag_Count_num}", Flag);
             Flag_Name.MarkDirtyRepaint();
@@ -141,13 +141,13 @@ namespace DialogueQuest.Elements
 
         private void Delete_Flag(Flag_Data flag_item)
         {
-            if (Flags.Count <= 0)
+            if (Flags.Count <= 1 )
             {
                 extensionContainer.Remove(Flag_Fold_Out);
                 
             }
 
-            Flags_private.Remove(flag_item);
+            Flags.Remove(flag_item);
         }
         
         #endregion
@@ -164,7 +164,6 @@ namespace DialogueQuest.Elements
             inputContainer.Add(input);
             
             RefreshExpandedState();
-            
 
         }
 
