@@ -9,7 +9,9 @@ namespace DialogueQuest.Utilities
 {
     public static class Save_Utilities
     {
-        private static Graph_View graph; 
+        private static Graph_View graph;
+
+        private static string graph_file_name;
         
         private static List<Basic_Node> basic_nodes;
         private static List<Control_Base_Node> control_nodes;
@@ -20,7 +22,6 @@ namespace DialogueQuest.Utilities
         
         public static void Save()
         {
-            
             Create_Save_Folder();
             Get_Graph_Elements();
             save_basic_nodes();
@@ -33,7 +34,7 @@ namespace DialogueQuest.Utilities
 
         #endregion
 
-        #region Save Folder Management
+        #region Save Folder Management 
 
         private static void Create_Save_Folder()
         {
@@ -46,7 +47,8 @@ namespace DialogueQuest.Utilities
         }
 
         #endregion
-        
+
+        #region Save Graph Elements
         
         private static void save_basic_nodes()
         {
@@ -102,5 +104,17 @@ namespace DialogueQuest.Utilities
                 
             } );
         }
+        
+        #endregion
+
+        private static void Start_saving(Graph_View graph_view , string file_name)
+        {
+            graph = graph_view;
+
+            graph_file_name = file_name;
+
+            basic_nodes = new List<Basic_Node>();
+            control_nodes = new List<Control_Base_Node>();
+        } 
     }
 }
