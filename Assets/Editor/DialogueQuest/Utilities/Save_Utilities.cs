@@ -4,6 +4,7 @@ using DialogueQuest.Data;
 using DialogueQuest.Elements;
 using DialogueQuest.scriptable_object;
 using UnityEditor;
+using UnityEngine;
 
 namespace DialogueQuest.Utilities
 {
@@ -14,7 +15,13 @@ namespace DialogueQuest.Utilities
         private static string graph_file_name;
         
         private static List<Basic_Node> basic_nodes;
-        private static List<Control_Base_Node> control_nodes;
+        private static List<Control_Node> control_nodes;
+
+        private static Dictionary<string, Basic_Node_Save> created_basic_nodes;
+        private static Dictionary<string, Control_Node> created_control_node;
+
+        private static Dictionary<string, Basic_Node_Save> loaded_basic_nodes;
+        private static Dictionary<string, Control_Node> loaded_control_node;
 
         
 
@@ -24,6 +31,10 @@ namespace DialogueQuest.Utilities
         {
             Create_Save_Folder();
             Get_Graph_Elements();
+            
+            Graph_Container graph_data = Create_Asset<Graph_Container>("Assets/Dialogue_Manager/Save" ,$"{graph_file_name}" );
+            graph_data.Initialize(graph_file_name);
+            
             save_basic_nodes();
         }
 
@@ -34,7 +45,7 @@ namespace DialogueQuest.Utilities
 
         #endregion
 
-        #region Save Folder Management 
+        #region Save Folder & File Management 
 
         private static void Create_Save_Folder()
         {
@@ -46,6 +57,29 @@ namespace DialogueQuest.Utilities
             AssetDatabase.CreateFolder("Assets/Dialogue_Manager/" , "Save" );
         }
 
+        private static T Create_Asset<T>(string path, string name ) where T : ScriptableObject
+        {
+            string full_path = $"{path}/{name}.asset";
+            
+            T asset = Load_Asset<T>(path, name);
+            
+            if (asset == null)
+            {
+                asset = ScriptableObject.CreateInstance<T>();
+                
+                AssetDatabase.CreateAsset(asset,full_path);
+            }
+
+            return asset;
+        }
+
+        private static T Load_Asset<T>(string path, string Asset_name) where T : ScriptableObject
+        {
+            string full_path = $"{path}/{Asset_name}.asset";
+
+            return AssetDatabase.LoadAssetAtPath<T>(full_path);
+        }
+        
         #endregion
 
         #region Save Graph Elements
@@ -95,7 +129,7 @@ namespace DialogueQuest.Utilities
                     return;
                 }
 
-                if (element is Control_Base_Node control_node)
+                if (element is Control_Node control_node)
                 {
                     control_nodes.Add(control_node);
                     
@@ -114,7 +148,7 @@ namespace DialogueQuest.Utilities
             graph_file_name = file_name;
 
             basic_nodes = new List<Basic_Node>();
-            control_nodes = new List<Control_Base_Node>();
+            control_nodes = new List<Control_Node>();
         } 
     }
 }

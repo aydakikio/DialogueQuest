@@ -7,7 +7,7 @@ using Button = UnityEngine.UIElements.Button;
 
 namespace DialogueQuest.Elements
 {
-    public class Control_Base_Node : Root_Node
+    public class Control_Node : Root_Node
     {
         public Node_Types type { get; set; }
         public string ID { get; set; }

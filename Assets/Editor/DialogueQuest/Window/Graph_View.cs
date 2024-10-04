@@ -54,7 +54,7 @@ namespace Dialogue_Quest.Window
             {
                 Type control_node_type = Type.GetType($"DialogueQuest.Elements.{Node_type}");
 
-                Control_Base_Node control_node = (Control_Base_Node)Activator.CreateInstance(control_node_type);
+                Control_Node control_node = (Control_Node)Activator.CreateInstance(control_node_type);
                 control_node.Initialize(position);
                 control_node.Draw();
 

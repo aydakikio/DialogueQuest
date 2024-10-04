@@ -6,7 +6,7 @@ using Image = UnityEngine.UIElements.Image;
 
 namespace DialogueQuest.Elements
 {
-    public class Quit_Node:Control_Base_Node
+    public class Quit_Node:Control_Node
     {
         public override void Initialize(Vector2 position)
         {
