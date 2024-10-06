@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Dialogue_Quest.Window;
 using DialogueQuest.Data;
+using DialogueQuest.Data.Save;
 using DialogueQuest.Elements;
 using DialogueQuest.scriptable_object;
 using UnityEditor;
@@ -17,23 +18,28 @@ namespace DialogueQuest.Utilities
         private static List<Basic_Node> basic_nodes;
         private static List<Control_Node> control_nodes;
 
-        private static Dictionary<string, Basic_Node_Save> created_basic_nodes;
+        private static Dictionary<string, Basic_Node_Save_SO> created_basic_nodes;
         private static Dictionary<string, Control_Node> created_control_node;
 
-        private static Dictionary<string, Basic_Node_Save> loaded_basic_nodes;
+        private static Dictionary<string, Basic_Node_Save_SO> loaded_basic_nodes;
         private static Dictionary<string, Control_Node> loaded_control_node;
 
         
 
         #region Main functions
         
-        public static void Save()
+        public static void Save(Graph_View graph_view , string file_name)
         {
+            ON_Start_Of_Saving(graph_view , file_name);
+            
             Create_Save_Folder();
             Get_Graph_Elements();
             
-            Graph_Container graph_data = Create_Asset<Graph_Container>("Assets/Dialogue_Manager/Save" ,$"{graph_file_name}" );
+            Graph_Save graph_data = Create_Asset<Graph_Save>("Assets/Dialogue_Manager/Save/Cache" , graph_file_name ); // PATH: "Assets/Dialogue_Manager/Save/Cache"
             graph_data.Initialize(graph_file_name);
+
+            Graph_Container graph_container = Create_Asset<Graph_Container>( "Assets/Dialogue_Manager/Save/Saved_Graphs" , graph_file_name); // PATH: "Assets/Dialogue_Manager/Save/Saved_Graphs"
+            graph_container.Initialize(graph_file_name);
             
             save_basic_nodes();
         }
@@ -55,6 +61,26 @@ namespace DialogueQuest.Utilities
             }
             
             AssetDatabase.CreateFolder("Assets/Dialogue_Manager/" , "Save" );
+
+            if ((AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache")) && (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs")))
+            {
+                return;
+            }
+
+            if ((AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache") == false ) && (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs") == true ))
+            {
+                AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save" , "Cache");
+                
+                return;
+            } 
+            if ((AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache") == true ) && (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs") == false ))
+            {
+                AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save/" , "Saved_Graphs");
+                return;
+            }
+            
+            AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save" , "Cache");
+            AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save/" , "Saved_Graphs");
         }
 
         private static T Create_Asset<T>(string path, string name ) where T : ScriptableObject
@@ -79,44 +105,14 @@ namespace DialogueQuest.Utilities
 
             return AssetDatabase.LoadAssetAtPath<T>(full_path);
         }
-        
+
+        private static void save_asset()
+        {
+            
+        }
         #endregion
 
         #region Save Graph Elements
-        
-        private static void save_basic_nodes()
-        {
-            foreach (Basic_Node node in basic_nodes)
-            {
-                Basic_Node_Save nodeSaveContainer = new Basic_Node_Save();
-                
-                nodeSaveContainer.Id = node.ID;
-                nodeSaveContainer.name = node.Node_name;
-                nodeSaveContainer.type = node.type;
-                
-                nodeSaveContainer.Dialogue = node.Dialogue;
-                
-                nodeSaveContainer.Flag_Infos = node.Flags as List<Flag_Data>;
-                nodeSaveContainer.Choices = Save_Choices(node.choices);
-                
-                nodeSaveContainer.Node_Position = node.GetPosition().position;
-                
-            }            
-        }
-
-        private static List<Choice_Data> Save_Choices(List<Choice_Data> current_choices)
-        {
-            List<Choice_Data> choices = new List<Choice_Data>();
-
-            foreach (Choice_Data choice in current_choices)
-            {
-                Choice_Data choice_data = new Choice_Data() { Choice_Text = choice.Choice_Text };
-                
-                choices.Add(choice_data);
-            }
-
-            return choices;
-        }
 
         private static void Get_Graph_Elements()
         {
@@ -139,9 +135,54 @@ namespace DialogueQuest.Utilities
             } );
         }
         
+        private static void save_basic_nodes()
+        {
+            foreach (Basic_Node node in basic_nodes)
+            {
+                Basic_Node_Save_SO nodeSaveSoContainer = new Basic_Node_Save_SO();
+                
+                nodeSaveSoContainer.Id = node.ID;
+                nodeSaveSoContainer.name = node.Node_name;
+                nodeSaveSoContainer.type = node.type;
+                
+                nodeSaveSoContainer.Dialogue = node.Dialogue;
+                
+                nodeSaveSoContainer.Flag_Infos = node.Flags as List<Flag_Data>;
+                nodeSaveSoContainer.Choices = Save_Choices(node.choices);
+                
+                nodeSaveSoContainer.Node_Position = node.GetPosition().position;
+                
+            }            
+        }
+
+        private static List<Choice_Data> Save_Choices(List<Choice_Data> current_choices)
+        {
+            List<Choice_Data> choices = new List<Choice_Data>();
+
+            foreach (Choice_Data choice in current_choices)
+            {
+                Choice_Data choice_data = new Choice_Data() { Choice_Text = choice.Choice_Text };
+                
+                choices.Add(choice_data);
+            }
+
+            return choices;
+        }
+
+        private static void Save_Control_Nodes()
+        {
+            /*
+            foreach (Control_Node node in control_nodes)
+            {
+                Control_Node_Save control_node_container = new Control_Node_Save();
+                
+                
+            }
+            */
+        }
         #endregion
 
-        private static void Start_saving(Graph_View graph_view , string file_name)
+        private static void ON_Start_Of_Saving (Graph_View graph_view , string file_name)
         {
             graph = graph_view;
 
