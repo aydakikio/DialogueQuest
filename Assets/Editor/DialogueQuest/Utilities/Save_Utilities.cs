@@ -55,14 +55,13 @@ namespace DialogueQuest.Utilities
 
         private static void Create_Save_Folder()
         {
-            if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save"))
+            if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save") == false )
             {
-                return;
+                AssetDatabase.CreateFolder("Assets/Dialogue_Manager/" , "Save" );
+                
             }
             
-            AssetDatabase.CreateFolder("Assets/Dialogue_Manager/" , "Save" );
-
-            if ((AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache")) && (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs")))
+            if ((AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache") == true) && (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs") == true ))
             {
                 return;
             }
@@ -76,6 +75,7 @@ namespace DialogueQuest.Utilities
             if ((AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache") == true ) && (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs") == false ))
             {
                 AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save/" , "Saved_Graphs");
+                
                 return;
             }
             
