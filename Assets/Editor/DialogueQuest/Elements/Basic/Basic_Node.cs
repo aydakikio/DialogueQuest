@@ -102,6 +102,7 @@ namespace DialogueQuest.Elements
             
             extensionContainer.Add(Dialogue_foldOut);
             
+            RefreshExpandedState();
         }
         
         private DropdownField Create_Drop_Down()
