@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Dialogue_Quest.Window;
 using DialogueQuest.Data;
 using DialogueQuest.Enumerations;
 using DialogueQuest.Utilities;
@@ -12,7 +13,7 @@ namespace DialogueQuest.Elements
 {
     public class Choice_Node : Basic_Node
     {
-
+        private Graph_View graphView = new Graph_View();
         public override void Initialize(Vector2 position)
         {
             base.Initialize(position);
@@ -60,15 +61,7 @@ namespace DialogueQuest.Elements
             Button choice_delete_button = Element_Utilities.Create_Button("X", () =>
             {
                 if (choices.Count == 1) return;
-                if (out_put.connected)
-                {
-                    //out_put.DisconnectAll();
-                    if (out_put.connections != null)
-                    {
-                        graph.DeleteElements(out_put.connections);
-                    }
-                    
-                }
+                if (out_put.connected) graphView.DeleteElements(out_put.connections); 
                 
                 choices.Remove(choice);
                 outputContainer.Remove(out_put);
