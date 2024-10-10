@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Dialogue_Quest.Window;
 using DialogueQuest.Data;
+using DialogueQuest.Data.Save;
 using DialogueQuest.Enumerations;
 using UnityEngine.UIElements;
 using DialogueQuest.Utilities;
@@ -16,7 +17,7 @@ namespace DialogueQuest.Elements
         public string Dialogue { get; set; }
         public Node_Types type { get; set; }
         public string ID { get; set; }
-        public List<Choice_Data> choices { get; set; }
+        public List<Choice_Save> choices { get; set; }
         
         
         private int Flag_Count_num = 1;
@@ -42,7 +43,7 @@ namespace DialogueQuest.Elements
             Node_name = "New Node";
 
             ID = Assign_ID();
-            choices = new List<Choice_Data>();
+            choices = new List<Choice_Save>();
             Flags = new List<Flag_Data>();
             
             Dialogue = "Dialgue Text";
@@ -71,8 +72,6 @@ namespace DialogueQuest.Elements
                     case "Flag":
                         ADD_Flag();
                         option_menu.value = "ADD ITEM";
-                        break;
-                    case "Animation" :
                         break;
                 }
             });

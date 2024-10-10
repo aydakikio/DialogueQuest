@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dialogue_Quest.Window;
 using DialogueQuest.Data;
+using DialogueQuest.Data.Save;
 using DialogueQuest.Enumerations;
 using DialogueQuest.Utilities;
 using NUnit.Framework;
@@ -17,7 +18,7 @@ namespace DialogueQuest.Elements
         public override void Initialize(Vector2 position)
         {
             base.Initialize(position);
-            Choice_Data init_choice = new Choice_Data(){Choice_Text = "New Choice"};
+            Choice_Save init_choice = new Choice_Save(){Choice_Text = "New Choice"};
             choices.Add(init_choice);
 
             type = Node_Types.Choice_Node;
@@ -29,7 +30,7 @@ namespace DialogueQuest.Elements
             
             Button Add_Choice = Element_Utilities.Create_Button("Add Choice" , () =>
             {
-                Choice_Data data = new Choice_Data() { Choice_Text = "New Choice" };
+                Choice_Save data = new Choice_Save() { Choice_Text = "New Choice" };
                 choices.Add(data);
                 Port port = Create_Choice_Port(data);
                 
@@ -39,7 +40,7 @@ namespace DialogueQuest.Elements
             
             mainContainer.Insert(1 , Add_Choice);
 
-            foreach (Choice_Data choice in choices)
+            foreach (Choice_Save choice in choices)
             {
                 Port init_choice_port = Create_Choice_Port(choice);
 
@@ -54,7 +55,7 @@ namespace DialogueQuest.Elements
             Port out_put = this.Create_Port(Orientation.Horizontal, Direction.Output , Port.Capacity.Multi);
             out_put.portName = null;
             out_put.userData = data;
-            Choice_Data choice = (Choice_Data) data;
+            Choice_Save choice = (Choice_Save) data;
             
             
             

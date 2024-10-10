@@ -155,13 +155,13 @@ namespace DialogueQuest.Utilities
             }            
         }
 
-        private static List<Choice_Data> Save_Choices(List<Choice_Data> current_choices)
+        private static List<Choice_Save> Save_Choices(List<Choice_Save> current_choices)
         {
-            List<Choice_Data> choices = new List<Choice_Data>();
+            List<Choice_Save> choices = new List<Choice_Save>();
 
-            foreach (Choice_Data choice in current_choices)
+            foreach (Choice_Save choice in current_choices)
             {
-                Choice_Data choice_data = new Choice_Data() { Choice_Text = choice.Choice_Text };
+                Choice_Save choice_data = new Choice_Save() { Choice_Text = choice.Choice_Text };
                 
                 choices.Add(choice_data);
             }
