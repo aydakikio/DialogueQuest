@@ -18,6 +18,6 @@ namespace DialogueQuest.Data.Save
         
         [field: SerializeField] public List<Choice_Save> choices { get; set; }
         
-        [field: SerializeField] public Vector2 position { get; set; }
+        [field: SerializeField] public Vector2 Position { get; set; }
     }
 }

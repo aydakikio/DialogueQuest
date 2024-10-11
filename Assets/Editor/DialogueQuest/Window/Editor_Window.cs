@@ -202,7 +202,13 @@ namespace Dialogue_Quest.Window
 
         private void save()
         {
-            
+            //Add new if for preventing graph to be saved with errors
+            if (string.IsNullOrEmpty(file_name_field.value))
+            {
+                EditorUtility.DisplayDialog("Invalid file name!" , "Please ensure the file name that you typed in is valid ", "OK");
+                return;
+            }
+            Save_Utilities.Save(graph, file_name_field.value);
         }
 
         private void load()

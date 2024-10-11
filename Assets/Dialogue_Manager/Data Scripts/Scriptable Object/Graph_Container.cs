@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DialogueQuest.Data.Save;
 using UnityEngine;
 
 namespace DialogueQuest.scriptable_object
@@ -8,6 +9,7 @@ namespace DialogueQuest.scriptable_object
     {
         [field: SerializeField ] public string File_name { get; set;  }
         [field: SerializeField ] public List<Basic_Node_Save_SO> graph_basic_nodes { get; set; } 
+        [field: SerializeField] public List<Control_Node_Save_SO> graph_control_nodes { get; set; }
         
         public void Initialize(string file_name)
         {

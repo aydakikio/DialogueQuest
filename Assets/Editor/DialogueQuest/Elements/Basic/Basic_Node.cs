@@ -32,7 +32,7 @@ namespace DialogueQuest.Elements
             
            private string Flag = "New Flag";
 
-           public List<Flag_Data> Flags { get; set; }
+           public List<Flag_Save> Flags { get; set; }
            
         #endregion
        
@@ -44,7 +44,7 @@ namespace DialogueQuest.Elements
 
             ID = Assign_ID();
             choices = new List<Choice_Save>();
-            Flags = new List<Flag_Data>();
+            Flags = new List<Flag_Save>();
             
             Dialogue = "Dialgue Text";
             
@@ -117,7 +117,7 @@ namespace DialogueQuest.Elements
 
         private void ADD_Flag()
         {
-            Flag_Data flag = new Flag_Data();
+            Flag_Save flag = new Flag_Save();
             Flags.Add(flag);
             
             var Flag_Name = Element_Utilities.Create_TextField($"Flag{Flag_Count_num}", Flag);
@@ -139,7 +139,7 @@ namespace DialogueQuest.Elements
             Flag_Count_num++;
         }
 
-        private void Delete_Flag(Flag_Data flag_item)
+        private void Delete_Flag(Flag_Save flag_item)
         {
             if (Flags.Count <= 1 )
             {
