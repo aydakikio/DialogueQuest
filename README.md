@@ -37,9 +37,9 @@ DialogueQuest is a powerful and flexible dialogue management system for Unity, d
 
 ## Advanced Features
 
-- **Animations**: Integrate character animations with dialogue using the Animation_Data class.
-- **Scene Integration**: Use the Scene_Vision class to easily access GameObjects and Animators in your scene.
-- **Search**: Quickly find nodes in large dialogue trees using the search functionality.
+Coming soon!
+For more info about future features , check [this](https://github.com/aydakikio/DialogueQuest/discussions/5).
+
 # How to Contribute
 
 We’re building Dialogue Quest together with our community, and we’re always glad to have new contributors on board. Here’s how you can get involved and help us along the way:
