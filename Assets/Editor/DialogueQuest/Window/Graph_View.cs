@@ -45,10 +45,8 @@ namespace Dialogue_Quest.Window
             ContextualMenuManipulator Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction(action_title ,action_Event => AddElement(Create_Node( action_Event.eventInfo.localMousePosition, parent_node_type , Node_type))));
             return Menu;
         }
-        private Node Create_Node(Vector2 position , string parnent_node_type , Node_Types Node_type)
+        public Node Create_Node(Vector2 position , string parnent_node_type , Node_Types Node_type)
         {
-
-            
             //For Control nodes
             if (parnent_node_type.ToLower() == "control")
             {

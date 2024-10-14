@@ -41,8 +41,8 @@ namespace DialogueQuest.Elements
         public virtual void Initialize(Vector2 position)
         {
             Node_name = "New Node";
-
-            ID = Assign_ID();
+            
+            ID = Root_Node.Assign_ID();
             choices = new List<Choice_Save>();
             Flags = new List<Flag_Save>();
             
