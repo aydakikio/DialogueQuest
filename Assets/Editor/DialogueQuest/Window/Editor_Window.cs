@@ -208,7 +208,9 @@ namespace Dialogue_Quest.Window
                 EditorUtility.DisplayDialog("Invalid file name!" , "Please ensure the file name that you typed in is valid ", "OK");
                 return;
             }
-            Save_Utilities.Save(graph, file_name_field.value);
+            
+            Save_Utilities.Start_Saving(graph , file_name_field.value);
+            Save_Utilities.Save();
         }
 
         private void load()

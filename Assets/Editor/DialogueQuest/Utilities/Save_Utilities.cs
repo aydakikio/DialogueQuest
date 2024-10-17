@@ -29,7 +29,7 @@ namespace DialogueQuest.Utilities
         private static Dictionary<string, Control_Node> loaded_control_node;
 
         
-        private static void ON_Start_Of_Saving (Graph_View graph_view , string file_name)
+        public static void Start_Saving (Graph_View graph_view , string file_name)
         {
             graph = graph_view;
 
@@ -48,19 +48,19 @@ namespace DialogueQuest.Utilities
         
         #region Main functions
         
-        public static void Save(Graph_View graph_view , string file_name)
+        public static void Save()
         {
-            
-           ON_Start_Of_Saving(graph_view , file_name);
 
            Create_root_folders();
            Get_Graph_Elements();
+           
+           Graph_Save editor_data = Create_Asset<Graph_Save>($"Assets/DialogueManager/Save/Cache/{graph_file_name}" , graph_file_name);
+           editor_data.Initialize(graph_file_name);
 
-           Graph_Save editor_data = new Graph_Save();
-           editor_data.Initialize(file_name);
+           
 
-           Graph_Container runtime_data = new Graph_Container();
-           runtime_data.Initialize(file_name);
+           Graph_Container runtime_data = Create_Asset<Graph_Container>("Assets/DialogueManager/save/SavedGraphs" , graph_file_name);
+           runtime_data.Initialize(graph_file_name);
            
            save_nodes(0,editor_data , runtime_data);//For basic nodes
            save_nodes(1 , editor_data , runtime_data);
@@ -74,7 +74,7 @@ namespace DialogueQuest.Utilities
         public static void Load()
         {
             
-            Graph_Save editor_info = Load_Asset<Graph_Save>($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}" , graph_file_name);
+            Graph_Save editor_info = Load_Asset<Graph_Save>($"Assets/DialogueManager/Save/Cache/{graph_file_name}" , graph_file_name);
 
             if (editor_info == null)
             {
@@ -167,7 +167,7 @@ namespace DialogueQuest.Utilities
                     }
             
                     update_choice_connection();
-                    update_basic_nodes(basic_node_names, graph_data);
+                    //update_basic_nodes(basic_node_names, graph_data);
                     
                     break;
                 case 1 : //Control nodes saving
@@ -219,12 +219,12 @@ namespace DialogueQuest.Utilities
         {
             Basic_Node_Save_SO basic_node_container;
             
-            basic_node_container = Create_Asset<Basic_Node_Save_SO>($"Assets/Dialogue_Manager/Save/Cache/Save/Cache/{graph_file_name}/Elements/Basic" , node.Node_name);
+            basic_node_container = Create_Asset<Basic_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/Basic" , node.Node_name);
             graph_Container.graph_basic_nodes.Add(basic_node_container);
             
             basic_node_container.Initialize(node.Node_name , node.type ,node.Dialogue, Convert_To_Flag_Data(node.Flags), Convert_To_Choice_Data(node.choices) ,node.GetPosition().position);
             
-            created_basic_nodes.Add(node.ID , basic_node_container);
+            //created_basic_nodes.Add(node.ID , basic_node_container);
             save_asset(basic_node_container);
         }
 
@@ -233,17 +233,19 @@ namespace DialogueQuest.Utilities
             
         }
         
-        private static void update_basic_nodes(List<string> current_Basic_Nodes_name , Graph_Save graph_data)
+        private static void update_basic_nodes(List<string> current_Basic_Nodes_name , Graph_Save editor_data)
         {
-            if (graph_data.Basic_nodes != null && graph_data.Basic_nodes.Count != 0)
+            if (editor_data.Basic_nodes != null && editor_data.Basic_nodes.Count != 0)
             {
-                List<string> remove_nodes = graph_data.Basic_nodes_old_names.Except(current_Basic_Nodes_name).ToList();
+                List<string> remove_nodes = editor_data.Basic_nodes_old_names.Except(current_Basic_Nodes_name).ToList();
 
                 foreach (string name in remove_nodes)
                 {
-                    AssetDatabase.DeleteAsset($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}/Elements/Basic/{name}.asset");
+                    AssetDatabase.DeleteAsset($"Assets/DialogueManager/save/cache/{graph_file_name}/Elements/Basic/{name}.asset");
                 }
             }
+
+            editor_data.Basic_nodes_old_names = new List<string>(current_Basic_Nodes_name);
         }
 
         #endregion
@@ -309,9 +311,10 @@ namespace DialogueQuest.Utilities
         
         private static void update_choice_connection()
         {
-            foreach (var node in basic_nodes)
+            /*
+            foreach (Basic_Node node in basic_nodes)
             {
-                var node_container = created_basic_nodes[node.ID];
+                Basic_Node_Save_SO node_container = created_basic_nodes[node.ID];
 
                 for (var choice_index = 0; choice_index < node.choices.Count; choice_index++)
                 {
@@ -322,6 +325,7 @@ namespace DialogueQuest.Utilities
                     node_container.Choices[choice_index].NextSavedBasicNodeSaveSO = created_basic_nodes[node.ID];
                 }
             }
+            */
         }
 
         #endregion
@@ -371,52 +375,43 @@ namespace DialogueQuest.Utilities
         }
         private static void Create_Save_Folders()
         {
-            if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save") == false)
-                AssetDatabase.CreateFolder("Assets/Dialogue_Manager/", "Save");
-
-            if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache") &&
-                AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs")) return;
-
-            if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache") == false &&
-                AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs"))
+            if (AssetDatabase.IsValidFolder("Assets/DialogueManager/save") == false)
             {
-                AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save", "Cache");
-
-                return;
+                AssetDatabase.CreateFolder("Assets/DialogueManager", "save");
             }
-
-            if (AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Cache") &&
-                AssetDatabase.IsValidFolder("Assets/Dialogue_Manager/Save/Saved_Graphs") == false)
+            
+            if (AssetDatabase.IsValidFolder("Assets/DialogueManager/save/Cache") == false )
             {
-                AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save/", "Saved_Graphs");
-
-                return;
+                AssetDatabase.CreateFolder("Assets/DialogueManager/save", "cache");
             }
-
-            AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save", "Cache");
-            AssetDatabase.CreateFolder("Assets/Dialogue_Manager/Save/", "Saved_Graphs");
+            
+            if (AssetDatabase.IsValidFolder("Assets/DialogueManager/save/SavedGraphs") == false)
+            {
+                AssetDatabase.CreateFolder("Assets/DialogueManager/save" , "SavedGraphs");
+            }
+            
         }
 
         private static void Create_Cache_folders()
         {
-            if (AssetDatabase.IsValidFolder($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}") == false)
+            if (AssetDatabase.IsValidFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}") == false)
             {
-                AssetDatabase.CreateFolder($"Assets/Dialogue_Manager/Save/Cache" , $"{graph_file_name}");
+                AssetDatabase.CreateFolder($"Assets/DialogueManager/Save/Cache" , $"{graph_file_name}");
             }
 
-            if (AssetDatabase.IsValidFolder($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}/Elements") == false)
+            if (AssetDatabase.IsValidFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements") == false)
             {
-                AssetDatabase.CreateFolder($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}" , "Elements");
+                AssetDatabase.CreateFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}" , "Elements");
             }
 
-            if (AssetDatabase.IsValidFolder($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}/Elements/Basic") == false)
+            if (AssetDatabase.IsValidFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/basic") == false)
             {
-                AssetDatabase.CreateFolder($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}/Elements" , "Basic");
+                AssetDatabase.CreateFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements" , "Basic");
             }
 
-            if (AssetDatabase.IsValidFolder($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}/Elements/Control") == false)
+            if (AssetDatabase.IsValidFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/Control") == false)
             {
-                AssetDatabase.CreateFolder($"Assets/Dialogue_Manager/Save/Cache/{graph_file_name}/Elements", "Control");
+                AssetDatabase.CreateFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements", "Control");
             }
         }
 

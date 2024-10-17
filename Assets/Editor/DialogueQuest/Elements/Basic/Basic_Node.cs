@@ -53,10 +53,17 @@ namespace DialogueQuest.Elements
         }
         public virtual void draw()
         {
-            TextField Get_node_name = Element_Utilities.Create_TextField(null,Node_name);
+            TextField Get_node_name = Element_Utilities.Create_TextField(null,Node_name , callback =>
+            {
+                TextField target = (TextField)callback.target;
+                target.value = callback.newValue;
+
+                Node_name = target.value;
+
+            });
             Get_node_name.MarkDirtyRepaint();
             
-            Get_node_name.RegisterValueChangedCallback(Event => { Node_name = Event.newValue; });
+            
             
                       
             //Create Drop Down 
