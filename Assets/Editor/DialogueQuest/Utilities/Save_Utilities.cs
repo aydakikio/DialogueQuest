@@ -146,7 +146,6 @@ namespace DialogueQuest.Utilities
                 {
                     control_nodes.Add(control_node);
                     
-                    return;
                 }
                 
             } );
@@ -167,7 +166,7 @@ namespace DialogueQuest.Utilities
                     }
             
                     update_choice_connection();
-                    //update_basic_nodes(basic_node_names, graph_data);
+                    update_basic_nodes(basic_node_names, graph_data);
                     
                     break;
                 case 1 : //Control nodes saving
@@ -224,7 +223,7 @@ namespace DialogueQuest.Utilities
             
             basic_node_container.Initialize(node.Node_name , node.type ,node.Dialogue, Convert_To_Flag_Data(node.Flags), Convert_To_Choice_Data(node.choices) ,node.GetPosition().position);
             
-            //created_basic_nodes.Add(node.ID , basic_node_container);
+            created_basic_nodes.Add(node.ID , basic_node_container);
             save_asset(basic_node_container);
         }
 
@@ -311,7 +310,7 @@ namespace DialogueQuest.Utilities
         
         private static void update_choice_connection()
         {
-            /*
+            
             foreach (Basic_Node node in basic_nodes)
             {
                 Basic_Node_Save_SO node_container = created_basic_nodes[node.ID];
@@ -325,7 +324,7 @@ namespace DialogueQuest.Utilities
                     node_container.Choices[choice_index].NextSavedBasicNodeSaveSO = created_basic_nodes[node.ID];
                 }
             }
-            */
+            
         }
 
         #endregion
