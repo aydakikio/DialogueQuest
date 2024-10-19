@@ -84,6 +84,10 @@ namespace DialogueQuest.Utilities
                 return;
             }
             
+            //Editor_Window.upda
+            Load_Nodes(0,editor_info.Basic_nodes , null); //For Basic Nodes 
+            Load_Nodes(1 , null , editor_info.control_nodes); //For Control Nodes
+            //Load_Node_connections();
         }
 
         #endregion
@@ -106,7 +110,7 @@ namespace DialogueQuest.Utilities
                         basic_node.ID = basic_node_data.ID;
                         basic_node.Dialogue = basic_node_data.Dialogue;
                         basic_node.Node_name = basic_node_data.Name;
-                        basic_node.choices = basic_node_data.choices;
+                        basic_node.choices = choices;
                         basic_node.Flags = basic_node_data.flags;
                         
                         basic_node.draw();
@@ -117,10 +121,41 @@ namespace DialogueQuest.Utilities
                     }
                     break;
                 case 1 : //For Control nodes 
-                    foreach (Control_Node_Save control_node in control_nodes)
+                    foreach (Control_Node_Save control_node_data in control_nodes)
                     {
+                        Control_Node control_node = graph.Create_Node(control_node_data.Position , "Control" , control_node_data.type) as Control_Node;
+
+                        control_node.ID = control_node_data.ID;
+                        
+                        control_node.Draw();
+                        
+                        graph.Add(control_node);
+                        
+                        loaded_control_node.Add(control_node.ID , control_node);
+                    }
+                    break;
+            }
+        }
+
+        private static void Load_Node_connections(int mode)
+        {
+            switch (mode)
+            {
+                case 0: //For Basic Nodes 
+                    foreach (KeyValuePair<string , Basic_Node> loaded_node in loaded_basic_nodes)
+                    {
+                        foreach (Port output_port in loaded_node.Value.outputContainer.Children())
+                        {
+                            Choice_Save choice_data = (Choice_Save)output_port.userData;
+                            if (string.IsNullOrEmpty(choice_data.Node_Id))
+                            {
+                                continue;
+                            }
+                        }
                         
                     }
+                    break;
+                case 1: //For Control Nodes 
                     break;
             }
         }
@@ -229,7 +264,16 @@ namespace DialogueQuest.Utilities
 
         private static void save_control_nodes_to_SO_container(Control_Node node , Graph_Container graph_Container)
         {
+            Control_Node_Save_SO control_node_container;
             
+            control_node_container = Create_Asset<Control_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/Control" , node.ID);
+            
+            graph_Container.graph_control_nodes.Add(control_node_container);
+            
+            control_node_container.Initialize(node.ID , node.type , node.GetPosition().position);
+            created_control_node.Add(node.ID , control_node_container);
+            
+            save_asset(control_node_container);
         }
         
         private static void update_basic_nodes(List<string> current_Basic_Nodes_name , Graph_Save editor_data)
@@ -278,34 +322,6 @@ namespace DialogueQuest.Utilities
             }
             
             return choices;
-        }
-        
-        private static List<Flag_Save> save_flags(List<Flag_Save> node_Flags)
-        {
-            List<Flag_Save> flags = new List<Flag_Save>();
-
-            foreach (Flag_Save flag in node_Flags)
-            {
-                Flag_Save flag_data = new Flag_Save() { Flag_text = flag.Flag_text };
-
-                flags.Add(flag_data);
-            }
-
-            return flags;
-        }
-
-        private static List<Choice_Save> Save_Choices(List<Choice_Save> current_choices)
-        {
-            List<Choice_Save> clone_choices = new List<Choice_Save>();
-
-            foreach (Choice_Save choice in current_choices)
-            {
-                Choice_Save choice_data = new Choice_Save() { Choice_Text = choice.Choice_Text };
-                
-                clone_choices.Add(choice_data);
-            }
-
-            return clone_choices;
         }
         
         private static void update_choice_connection()
