@@ -52,11 +52,11 @@ namespace DialogueQuest.Elements
 
         private Port Create_Choice_Port(object data)
         {
-            Port out_put = this.Create_Port(Orientation.Horizontal, Direction.Output , Port.Capacity.Multi);
+            Port out_put = this.Create_Port(Orientation.Horizontal, Direction.Output , Port.Capacity.Single);
             out_put.portName = null;
             out_put.userData = data;
             Choice_Save choice = (Choice_Save) data;
-            
+            choice.output_port = out_put;
             
             
             Button choice_delete_button = Element_Utilities.Create_Button("X", () =>

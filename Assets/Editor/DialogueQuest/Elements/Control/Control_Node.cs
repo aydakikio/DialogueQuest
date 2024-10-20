@@ -28,7 +28,7 @@ namespace DialogueQuest.Elements
         private void Add_Input()
         {
             
-            Port input = this.Create_Port( Orientation.Horizontal , Direction.Input,Port.Capacity.Multi);
+            Port input = this.Create_Port( Orientation.Horizontal , Direction.Input,Port.Capacity.Single);
             input.portName = $"In";
             
             inputContainer.Add(input);

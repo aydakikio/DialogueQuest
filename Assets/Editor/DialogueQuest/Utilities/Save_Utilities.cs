@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Edge = UnityEditor.Experimental.GraphView.Edge;
 
 namespace DialogueQuest.Utilities
 {
@@ -151,6 +152,11 @@ namespace DialogueQuest.Utilities
                             {
                                 continue;
                             }
+                            /*
+                            if (choice_data.)
+                            {
+                                
+                            }*/
                         }
                         
                     }
@@ -337,7 +343,25 @@ namespace DialogueQuest.Utilities
 
                     if (string.IsNullOrEmpty(node_container.Id)) continue;
 
-                    node_container.Choices[choice_index].NextSavedBasicNodeSaveSO = created_basic_nodes[node.ID];
+                    if (node_choice.output_port.connected != true) return;
+
+                    foreach (Edge connection in node_choice.output_port.connections)
+                    {
+                        if (connection.input.GetType().IsSubclassOf(typeof(Basic_Node)))
+                        {
+                            node_choice.Node_Id = node.ID;
+                            node_container.Choices[choice_index].NextSavedBasicNodeSaveSO =
+                                created_basic_nodes[node.ID];
+                        }
+                        else
+                        {
+                            Control_Node nodme = connection.input.node as Control_Node;
+
+                            node_choice.Node_Id = nodme.ID;
+                            node_container.Choices[choice_index].NextSavedControlNodeSO =
+                                created_control_node[nodme.ID];
+                        }
+                    }
                 }
             }
             

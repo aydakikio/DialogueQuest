@@ -36,7 +36,7 @@ namespace DialogueQuest.Elements
          private void Add_Output()
          {
              time++;
-            Port output = Element_Utilities.Create_Port(this, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi);
+            Port output = Element_Utilities.Create_Port(this, Orientation.Horizontal, Direction.Output, Port.Capacity.Single);
             output.portName = $"Out{time} ";
             
             outputContainer.Add(output);
