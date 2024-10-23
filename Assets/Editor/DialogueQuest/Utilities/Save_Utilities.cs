@@ -45,7 +45,7 @@ namespace DialogueQuest.Utilities
             created_basic_nodes = new Dictionary<string, Basic_Node_Save_SO>();
             created_control_node = new Dictionary<string, Control_Node_Save_SO>();
             created_edges = new List<Edge>();
-            created_edges = graph_view.edges.ToList();
+            
 
             loaded_basic_nodes = new Dictionary<string, Basic_Node>();
             loaded_control_node = new Dictionary<string, Control_Node>();
@@ -169,6 +169,7 @@ namespace DialogueQuest.Utilities
 
         private static void Get_Graph_Elements()
         {
+            created_edges = graph.edges.ToList();
             graph.graphElements.ForEach(element =>
             {
                 if (element is Basic_Node base_node)
