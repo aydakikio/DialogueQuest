@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DialogueQuest.Data.Save
@@ -12,6 +13,8 @@ namespace DialogueQuest.Data.Save
         [field: SerializeField] public List<Control_Node_Save> control_nodes { get; set; }
         
         [field: SerializeField] public List<string> Basic_nodes_old_names { get; set; }
+        
+        [field: SerializeField] public List<Edge> graph_edges { get; set; }
 
         public void Initialize( string file_name)
         {
@@ -19,7 +22,8 @@ namespace DialogueQuest.Data.Save
 
             Basic_nodes = new List<Basic_Node_Save>();
             control_nodes = new List<Control_Node_Save>();
-            
+
+            graph_edges = new List<Edge>();
         }
     }
 }

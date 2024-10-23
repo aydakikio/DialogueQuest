@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using DialogueQuest;
 using DialogueQuest.Elements;
@@ -14,7 +15,7 @@ namespace Dialogue_Quest.Window
 {
     public class Editor_Window: EditorWindow
     {
-        private TextField file_name_field;
+        private static TextField file_name_field;
         private Button Save_button;
         private Toolbar toolbar;
         private Graph_View graph;
@@ -215,7 +216,20 @@ namespace Dialogue_Quest.Window
 
         private void load()
         {
+            string file_Path = EditorUtility.OpenFilePanel("Dialogue Graphs", $"Assets/DialogueManager/Save/Cache/","asset");
+            if (string.IsNullOrEmpty(file_Path))
+            {
+                return;
+            }
+            graph.Clear();
             
+            Save_Utilities.Start_Saving(graph, Path.GetFileNameWithoutExtension(file_Path));
+            Save_Utilities.Load();
+        }
+
+        public static void update_file_name(string new_file_name)
+        {
+            file_name_field.value = new_file_name;
         }
         
 

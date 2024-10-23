@@ -5,7 +5,6 @@ using DialogueQuest.Data;
 using DialogueQuest.Data.Save;
 using DialogueQuest.Elements;
 using DialogueQuest.scriptable_object;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -24,10 +23,13 @@ namespace DialogueQuest.Utilities
 
         private static Dictionary<string, Basic_Node_Save_SO> created_basic_nodes;
         private static Dictionary<string, Control_Node_Save_SO> created_control_node;
+        private static List<Edge> created_edges;
         
 
         private static Dictionary<string, Basic_Node> loaded_basic_nodes;
         private static Dictionary<string, Control_Node> loaded_control_node;
+
+        
 
         
         public static void Start_Saving (Graph_View graph_view , string file_name)
@@ -39,12 +41,15 @@ namespace DialogueQuest.Utilities
             basic_nodes = new List<Basic_Node>();
             control_nodes = new List<Control_Node>();
             
-
+            
             created_basic_nodes = new Dictionary<string, Basic_Node_Save_SO>();
             created_control_node = new Dictionary<string, Control_Node_Save_SO>();
+            created_edges = new List<Edge>();
+            created_edges = graph_view.edges.ToList();
 
             loaded_basic_nodes = new Dictionary<string, Basic_Node>();
             loaded_control_node = new Dictionary<string, Control_Node>();
+            
         } 
         
         #region Main functions
@@ -57,19 +62,20 @@ namespace DialogueQuest.Utilities
            
            Graph_Save editor_data = Create_Asset<Graph_Save>($"Assets/DialogueManager/Save/Cache/{graph_file_name}" , graph_file_name);
            editor_data.Initialize(graph_file_name);
-
            
-
            Graph_Container runtime_data = Create_Asset<Graph_Container>("Assets/DialogueManager/save/SavedGraphs" , graph_file_name);
            runtime_data.Initialize(graph_file_name);
            
            save_nodes(0,editor_data , runtime_data);//For basic nodes
            save_nodes(1 , editor_data , runtime_data);
-           
-           
+
+           editor_data.graph_edges = created_edges;
            
            save_asset(editor_data);
            save_asset(runtime_data);
+           
+           AssetDatabase.CopyAsset($"Assets/DialogueManager/Save/Cache/{graph_file_name}/{graph_file_name}.asset", $"Assets/DialogueManager/Save/Cache/{graph_file_name}/recovery/{graph_file_name}");
+           
         }
 
         public static void Load()
@@ -79,16 +85,17 @@ namespace DialogueQuest.Utilities
 
             if (editor_info == null)
             {
-                //EditorUtility.DisplayDialog ("The file couldn't find!" , "The file at path could not find \n\n" +
-                //                                                         "" + "" + "" , "OK"); //Shows Error 
+                EditorUtility.DisplayDialog ("The file couldn't find!" , "The file at path could not find \n\n" +
+                                                                         $"Assets/DialogueManager/Save/Cache/{graph_file_name} \n\n" + "please find and restore the file to previous shown path by going to \n\n" + 
+                                                                         $"Assets/DialogueManager/Save/Cache/{graph_file_name}/recovery/{graph_file_name}\n\n " , "OK"); //Shows Error 
                 
                 return;
             }
             
-            //Editor_Window.upda
+            Editor_Window.update_file_name(editor_info.File_Name);
             Load_Nodes(0,editor_info.Basic_nodes , null); //For Basic Nodes 
             Load_Nodes(1 , null , editor_info.control_nodes); //For Control Nodes
-            //Load_Node_connections();
+            Load_Node_connections(editor_info); //For created edges
         }
 
         #endregion
@@ -138,31 +145,19 @@ namespace DialogueQuest.Utilities
             }
         }
 
-        private static void Load_Node_connections(int mode)
+        private static void Load_Node_connections(Graph_Save editor_data)
         {
-            switch (mode)
+            foreach (Edge connection in editor_data.graph_edges)
             {
-                case 0: //For Basic Nodes 
-                    foreach (KeyValuePair<string , Basic_Node> loaded_node in loaded_basic_nodes)
-                    {
-                        foreach (Port output_port in loaded_node.Value.outputContainer.Children())
-                        {
-                            Choice_Save choice_data = (Choice_Save)output_port.userData;
-                            if (string.IsNullOrEmpty(choice_data.Node_Id))
-                            {
-                                continue;
-                            }
-                            /*
-                            if (choice_data.)
-                            {
-                                
-                            }*/
-                        }
-                        
-                    }
-                    break;
-                case 1: //For Control Nodes 
-                    break;
+                Port output_current_node = connection.output;
+                
+
+                Edge node_connection = output_current_node.ConnectTo(connection.input);
+                
+                graph.AddElement(node_connection);
+                
+                connection.output.node.RefreshPorts();
+                connection.input.node.RefreshPorts();
             }
         }
 
@@ -355,11 +350,11 @@ namespace DialogueQuest.Utilities
                         }
                         else
                         {
-                            Control_Node nodme = connection.input.node as Control_Node;
+                            Control_Node c_node = connection.input.node as Control_Node;
 
-                            node_choice.Node_Id = nodme.ID;
+                            node_choice.Node_Id = c_node.ID;
                             node_container.Choices[choice_index].NextSavedControlNodeSO =
-                                created_control_node[nodme.ID];
+                                created_control_node[c_node.ID];
                         }
                     }
                 }
@@ -451,6 +446,11 @@ namespace DialogueQuest.Utilities
             if (AssetDatabase.IsValidFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/Control") == false)
             {
                 AssetDatabase.CreateFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements", "Control");
+            }
+
+            if (AssetDatabase.IsValidFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}/recovery") == false)
+            {
+                AssetDatabase.CreateFolder($"Assets/DialogueManager/Save/Cache/{graph_file_name}", "recovery");
             }
         }
 
