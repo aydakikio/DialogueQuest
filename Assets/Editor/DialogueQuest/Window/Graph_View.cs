@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DialogueQuest;
+using DialogueQuest.Data.Save;
 using DialogueQuest.Elements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace Dialogue_Quest.Window
 {
     public class Graph_View : GraphView
     {
+        //Dictionary of start points 
+        private Dictionary<string, Start_Node_Save> start_nodes;
         public Graph_View()
         {
             Add_Grid_Background();
@@ -220,6 +223,50 @@ namespace Dialogue_Quest.Window
         
         #endregion
         
+        #region Start Point Management
+
+        private void get_selection_of_nodes()
+        {/*
+            if (this.selection != null)
+            {
+                foreach (Basic_Node node in this.selection)
+                {
+                    ContextualMenuManipulator Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction());
+                    //this.AddManipulator();
+                }
+            }
+            */
+        }
+        private void Manage_Start_Points(int mode,List<Basic_Node> selected_base_nodes)
+        {
+            //Only basic nodes can be considered  as start point !
+            switch (mode)
+            {
+                case 0 : //Adds to list of start points
+                    foreach (Basic_Node node_To_Add in selected_base_nodes)
+                    {
+                        Start_Node_Save start_node_container = new Start_Node_Save()
+                            { Node_ID = node_To_Add.ID, type = node_To_Add.type , position = node_To_Add.GetPosition().position };
+                        //Changes style to costume style
+                        start_nodes.Add(node_To_Add.ID , start_node_container);
+                    }
+                    break;
+                case 1: //Removes from list of start points
+                    foreach (var node_To_Delete in selected_base_nodes)
+                    {
+                        if (start_nodes.ContainsKey(node_To_Delete.ID))
+                        {
+                            start_nodes.Remove(node_To_Delete.ID);
+                            
+                            //Reset style to default
+                        }
+                    }
+                    break;
+            } 
+        }
+
+        #endregion
+        
         
         #region Other
 
@@ -230,6 +277,7 @@ namespace Dialogue_Quest.Window
         
         
         #endregion
+        
         
     }
 }
