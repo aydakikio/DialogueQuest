@@ -225,17 +225,34 @@ namespace Dialogue_Quest.Window
         
         #region Start Point Management
 
-        private void get_selection_of_nodes()
-        {/*
+        public void get_selection_of_nodes()
+        {
+            ContextualMenuManipulator Add_Menu = null;
+
+            ContextualMenuManipulator Del_menu = null;
             if (this.selection != null)
             {
-                foreach (Basic_Node node in this.selection)
-                {
-                    ContextualMenuManipulator Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction());
-                    //this.AddManipulator();
-                }
+                //Add Menu
+                Add_Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction ("Mark as Start Point",
+                    actionEvent => { Manage_Start_Points(0, this.selection.OfType<Basic_Node>().ToList()); }));
+
+
+                //Remove menu
+                 Del_menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction("UnMark Start Point",
+                        action_Event => { Manage_Start_Points(1, this.selection.OfType<Basic_Node>().ToList()); }));
+
+                this.AddManipulator(Add_Menu);
+                this.AddManipulator(Del_menu);
             }
-            */
+            else
+            {
+                if (Add_Menu == null && Del_menu == null)
+                {
+                    return;
+                }
+                this.RemoveManipulator(Add_Menu);
+                this.RemoveManipulator(Del_menu);
+            }
         }
         private void Manage_Start_Points(int mode,List<Basic_Node> selected_base_nodes)
         {
