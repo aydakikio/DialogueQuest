@@ -47,7 +47,6 @@ namespace Dialogue_Quest.Window
         {
             
             totoal_number.text = graph.get_total_nodes_number();
-            graph.get_selection_of_nodes(); //Beta Needs to Test
         }
 
         private void ADD_GraphView()

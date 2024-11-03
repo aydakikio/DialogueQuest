@@ -29,10 +29,23 @@ namespace Dialogue_Quest.Window
             this.AddManipulator(new ContentDragger());
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             
+            //Manage Start points graph menu
+            //Add Menu
+            ContextualMenuManipulator Add_Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction ("Mark as Start Point",
+                actionEvent => { get_selection_of_nodes(0); }));
+            
+            //Remove menu
+            ContextualMenuManipulator Del_menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction("UnMark Start Point",
+                action_Event => {get_selection_of_nodes(1); }));
+            
+            this.AddManipulator(Add_Menu);
+            this.AddManipulator(Del_menu);
+            
             //Create ADD Node Menu
             this.AddManipulator(Create_Contextal_Menu("Add Node (Single Node) " , "Basic" , Node_Types.Single_Node));
             this.AddManipulator(Create_Contextal_Menu("Add Node (Choice Node) " , "Basic" , Node_Types.Choice_Node));
             this.AddManipulator(Create_Contextal_Menu("Add Node (Quit Node)" ,"control" , Node_Types.Quit_Node));
+            
             
             //Set other manipulators
             this.AddManipulator(new SelectionDragger());
@@ -225,33 +238,16 @@ namespace Dialogue_Quest.Window
         
         #region Start Point Management
 
-        public void get_selection_of_nodes()
+        public void get_selection_of_nodes(int mode )
         {
-            ContextualMenuManipulator Add_Menu = null;
-
-            ContextualMenuManipulator Del_menu = null;
             if (this.selection != null)
             {
-                //Add Menu
-                Add_Menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction ("Mark as Start Point",
-                    actionEvent => { Manage_Start_Points(0, this.selection.OfType<Basic_Node>().ToList()); }));
-
-
-                //Remove menu
-                 Del_menu = new ContextualMenuManipulator(Event => Event.menu.AppendAction("UnMark Start Point",
-                        action_Event => { Manage_Start_Points(1, this.selection.OfType<Basic_Node>().ToList()); }));
-
-                this.AddManipulator(Add_Menu);
-                this.AddManipulator(Del_menu);
+                
+                Manage_Start_Points(mode, this.selection.OfType<Basic_Node>().ToList());
             }
             else
             {
-                if (Add_Menu == null && Del_menu == null)
-                {
-                    return;
-                }
-                this.RemoveManipulator(Add_Menu);
-                this.RemoveManipulator(Del_menu);
+                Debug.LogError("Selection is empty! for using this option first select a node");
             }
         }
         private void Manage_Start_Points(int mode,List<Basic_Node> selected_base_nodes)
