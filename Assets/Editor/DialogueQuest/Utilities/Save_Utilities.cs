@@ -20,6 +20,7 @@ namespace DialogueQuest.Utilities
         
         private static List<Basic_Node> basic_nodes;
         private static List<Control_Node> control_nodes;
+        private static Dictionary<string, Basic_Node> start_points;
 
         private static Dictionary<string, Basic_Node_Save_SO> created_basic_nodes;
         private static Dictionary<string, Control_Node_Save_SO> created_control_node;
@@ -44,6 +45,7 @@ namespace DialogueQuest.Utilities
             
             created_basic_nodes = new Dictionary<string, Basic_Node_Save_SO>();
             created_control_node = new Dictionary<string, Control_Node_Save_SO>();
+            start_points = new Dictionary<string, Basic_Node>();
             created_edges = new List<Edge>();
             
 
@@ -121,6 +123,12 @@ namespace DialogueQuest.Utilities
                         basic_node.choices = choices;
                         basic_node.Flags = basic_node_data.flags;
                         
+                        if (basic_node_data.Is_Start_point is true)
+                        {
+                            
+                            start_points.Add(basic_node.ID , basic_node);
+                            //Changes style to
+                        }
                         basic_node.draw();
                         
                         graph.Add(basic_node);
@@ -170,6 +178,7 @@ namespace DialogueQuest.Utilities
         private static void Get_Graph_Elements()
         {
             created_edges = graph.edges.ToList();
+            start_points = graph.get_start_points();
             graph.graphElements.ForEach(element =>
             {
                 if (element is Basic_Node base_node)
@@ -253,12 +262,19 @@ namespace DialogueQuest.Utilities
 
         private static void save_basic_nodes_To_SO_container(Basic_Node node  , Graph_Container graph_Container)
         {
+            bool is_start_point = false;
             Basic_Node_Save_SO basic_node_container;
             
             basic_node_container = Create_Asset<Basic_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/Basic" , node.Node_name);
             graph_Container.graph_basic_nodes.Add(basic_node_container);
+
+            if (start_points.ContainsKey(node.ID))
+            {
+                is_start_point = true;
+            }
             
-            basic_node_container.Initialize(node.Node_name , node.type ,node.Dialogue, Convert_To_Flag_Data(node.Flags), Convert_To_Choice_Data(node.choices) ,node.GetPosition().position);
+            basic_node_container.Initialize(node.Node_name ,is_start_point,node.type ,node.Dialogue, Convert_To_Flag_Data(node.Flags), Convert_To_Choice_Data(node.choices) ,node.GetPosition().position);
+            
             
             created_basic_nodes.Add(node.ID , basic_node_container);
             save_asset(basic_node_container);
