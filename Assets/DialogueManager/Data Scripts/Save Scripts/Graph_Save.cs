@@ -11,6 +11,7 @@ namespace DialogueQuest.Data.Save
         [field: SerializeField] public string File_Name { get; set; }
         [field: SerializeField] public List<Basic_Node_Save> Basic_nodes { get; set; }
         [field: SerializeField] public List<Control_Node_Save> control_nodes { get; set; }
+        [field: SerializeField] public Dictionary<string, Basic_Node_Save> start_points { get; set; }
         
         [field: SerializeField] public List<string> Basic_nodes_old_names { get; set; }
         

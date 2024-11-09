@@ -17,8 +17,7 @@ namespace DialogueQuest.scriptable_object
         [field:SerializeField] public List<Flag_Data> Flag_Infos { get; set; }
         [field:SerializeField] public List<Choice_Data> Choices { get; set; }
         [field:SerializeField]public Vector2 Node_Position { get; set; }
-        [field:SerializeField] public bool Is_Start_point { get; set; }
-        public void Initialize(string Name , bool Is_start_point ,Node_Types Type , string dialogue , List<Flag_Data> flag_infos,List<Choice_Data> choices , Vector2 position)
+        public void Initialize(string Name , Node_Types Type , string dialogue , List<Flag_Data> flag_infos,List<Choice_Data> choices , Vector2 position)
         {
             name = Name;
             type = Type;
@@ -26,7 +25,6 @@ namespace DialogueQuest.scriptable_object
             Flag_Infos = flag_infos;
             Choices = choices;
             Node_Position = position;
-            Is_Start_point = Is_start_point;
         }
     }
 }

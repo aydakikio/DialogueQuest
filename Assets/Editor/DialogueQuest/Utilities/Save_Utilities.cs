@@ -24,11 +24,13 @@ namespace DialogueQuest.Utilities
 
         private static Dictionary<string, Basic_Node_Save_SO> created_basic_nodes;
         private static Dictionary<string, Control_Node_Save_SO> created_control_node;
+        private static Dictionary<string, Basic_Node_Save_SO> created_start_point;
         private static List<Edge> created_edges;
         
 
         private static Dictionary<string, Basic_Node> loaded_basic_nodes;
         private static Dictionary<string, Control_Node> loaded_control_node;
+        private static Dictionary<string, Basic_Node> loaded_start_points;
 
         
 
@@ -45,13 +47,15 @@ namespace DialogueQuest.Utilities
             
             created_basic_nodes = new Dictionary<string, Basic_Node_Save_SO>();
             created_control_node = new Dictionary<string, Control_Node_Save_SO>();
+            created_start_point = new Dictionary<string, Basic_Node_Save_SO>();
+            
             start_points = new Dictionary<string, Basic_Node>();
             created_edges = new List<Edge>();
             
 
             loaded_basic_nodes = new Dictionary<string, Basic_Node>();
             loaded_control_node = new Dictionary<string, Control_Node>();
-            
+            loaded_start_points = new Dictionary<string, Basic_Node>();
         } 
         
         #region Main functions
@@ -95,8 +99,8 @@ namespace DialogueQuest.Utilities
             }
             
             Editor_Window.update_file_name(editor_info.File_Name);
-            Load_Nodes(0,editor_info.Basic_nodes , null); //For Basic Nodes 
-            Load_Nodes(1 , null , editor_info.control_nodes); //For Control Nodes
+            Load_Nodes(0, editor_info.start_points,editor_info.Basic_nodes , null); //For Basic Nodes 
+            Load_Nodes(1 , null ,null , editor_info.control_nodes); //For Control Nodes - The control nodes should not mark as start point
             Load_Node_connections(editor_info); //For created edges
         }
 
@@ -105,7 +109,7 @@ namespace DialogueQuest.Utilities
 
         #region Load Graph Elements
 
-        private static void Load_Nodes(int mode, List<Basic_Node_Save> basic_nodes, List<Control_Node_Save> control_nodes)
+        private static void Load_Nodes(int mode,Dictionary<string , Basic_Node_Save> saved_start_points, List<Basic_Node_Save> basic_nodes, List<Control_Node_Save> control_nodes)
         {
             switch (mode)
             {
@@ -123,13 +127,14 @@ namespace DialogueQuest.Utilities
                         basic_node.choices = choices;
                         basic_node.Flags = basic_node_data.flags;
                         
-                        if (basic_node_data.Is_Start_point is true)
-                        {
-                            
-                            start_points.Add(basic_node.ID , basic_node);
-                            //Changes style to
-                        }
                         basic_node.draw();
+                        
+                        if (saved_start_points.ContainsKey(basic_node_data.ID))
+                        {
+                            //Changes style to start point style 
+                            loaded_start_points.Add(basic_node.ID , basic_node);
+                        }
+                        
                         
                         graph.Add(basic_node);
                         
@@ -238,8 +243,14 @@ namespace DialogueQuest.Utilities
                 Dialogue = node.Dialogue,
                 flags = clone_flags(node.Flags),
                 choices = clone_choices(node.choices),
-                Position = node.GetPosition().position
+                Position = node.GetPosition().position ,
             };
+
+            if (start_points.ContainsKey(node.ID) == true)
+            {
+                graphSave.start_points.Add(node.ID , basic_node_Container);
+                
+            }
                 
             graphSave.Basic_nodes.Add(basic_node_Container);
         }
@@ -262,19 +273,17 @@ namespace DialogueQuest.Utilities
 
         private static void save_basic_nodes_To_SO_container(Basic_Node node  , Graph_Container graph_Container)
         {
-            bool is_start_point = false;
-            Basic_Node_Save_SO basic_node_container;
             
-            basic_node_container = Create_Asset<Basic_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/Basic" , node.Node_name);
+            Basic_Node_Save_SO basic_node_container = Create_Asset<Basic_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{graph_file_name}/Elements/Basic" , node.Node_name);
             graph_Container.graph_basic_nodes.Add(basic_node_container);
 
             if (start_points.ContainsKey(node.ID))
             {
-                is_start_point = true;
+                graph_Container.graph_start_points.Add(node.ID , basic_node_container );
+                created_start_point.Add(node.ID , basic_node_container );
             }
             
-            basic_node_container.Initialize(node.Node_name ,is_start_point,node.type ,node.Dialogue, Convert_To_Flag_Data(node.Flags), Convert_To_Choice_Data(node.choices) ,node.GetPosition().position);
-            
+            basic_node_container.Initialize(node.Node_name ,node.type ,node.Dialogue, Convert_To_Flag_Data(node.Flags), Convert_To_Choice_Data(node.choices) ,node.GetPosition().position);
             
             created_basic_nodes.Add(node.ID , basic_node_container);
             save_asset(basic_node_container);

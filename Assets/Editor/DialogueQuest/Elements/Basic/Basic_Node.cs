@@ -20,6 +20,7 @@ namespace DialogueQuest.Elements
         public List<Choice_Save> choices { get; set; }
         
         
+        
         private int Flag_Count_num = 1;
         
         private int input_count_num = 1;
@@ -201,6 +202,11 @@ namespace DialogueQuest.Elements
                 graph.DeleteElements(port.connections);
                 
             }
+        }
+
+        private static void change_style_to_start_point()
+        {
+            
         }
         
         #endregion

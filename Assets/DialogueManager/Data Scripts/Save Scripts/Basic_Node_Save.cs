@@ -19,6 +19,6 @@ namespace DialogueQuest.Data.Save
         [field: SerializeField] public List<Choice_Save> choices { get; set; }
         
         [field: SerializeField] public Vector2 Position { get; set; }
-        [field:SerializeField] public bool Is_Start_point { get; set; }
+       
     }
 }
