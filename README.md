@@ -16,9 +16,8 @@ DialogueQuest is a powerful and flexible dialogue management system for Unity, d
 
 ## Installation and Setup
 
-1. Clone this repository or download the latest release.
-2. Import the DialogueQuest folder into your Unity project's Assets directory.
-3. Open the Dialogue Quest Editor window by navigating to Window > Dialogue_Quest in the Unity menu.
+Coming soon!
+For more info about future realises and installation formats , check [this](https://github.com/aydakikio/DialogueQuest/discussions/5).
 
 ## How to Use
 
