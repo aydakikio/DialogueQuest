@@ -496,7 +496,7 @@ namespace DialogueQuest.Utilities
             return asset;
         }
 
-        private static T Load_Asset<T>(string path, string Asset_name) where T : ScriptableObject
+        public static T Load_Asset<T>(string path, string Asset_name) where T : ScriptableObject
         {
             var full_path = $"{path}/{Asset_name}.asset";
 

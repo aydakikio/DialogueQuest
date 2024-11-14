@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using DialogueManager.Data_Scripts;
 using DialogueQuest.Elements;
 using DialogueQuest.scriptable_object;
 using DialogueQuest.Utilities;
 using UnityEditor;
+using UnityEngine.UIElements;
 
 namespace Editor.DialogueQuest.Inspector
 {
@@ -10,6 +13,8 @@ namespace Editor.DialogueQuest.Inspector
     public class Dialogue_Runtime_Settings : UnityEditor.Editor
     {
         private SerializedProperty graph_countainer_property;
+        private SerializedProperty  selected_Startpoint_index;
+        
 
         private void OnEnable()
         {
@@ -36,12 +41,19 @@ namespace Editor.DialogueQuest.Inspector
             Inspector_Utility.Draw_Space();
         }
 
-        private void Draw_Start_point_filter()
+        private void Draw_Start_point_Area( Graph_Container runtime_data)
         {
-            Inspector_Utility.Draw_title("Filters");
-            // var Drop_Down = new DropdownField(null ,new List<string>{ "ADD ITEM", "Input","Flag"} , 0);
+            Inspector_Utility.Draw_title("Start Point ");
 
-            //Drop
+            string[] start_points_name = runtime_data.graph_start_points.Values.Select(node => node.name).ToArray();
+            
+            int old_StartPoint_Index = selected_Startpoint_index.intValue;
+
+            int selected_point_index = 0; //needs to update 
+
+            string selected_point_name = start_points_name[selected_point_index];
+            
+            Basic_Node_Save_SO se = (Basic_Node_Save_SO)Save_Utilities.Load_Asset<Basic_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{runtime_data.File_name}/Elements/basic" , selected_point_name );
         }
     }
 }

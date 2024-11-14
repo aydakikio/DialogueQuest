@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -41,6 +42,12 @@ namespace DialogueQuest.Utilities
         public static void Draw_Space(int size = 4)
         {
             EditorGUILayout.Space(size);
+        }
+
+        public static int Draw_Dropdown_field(string label , int selected_index , string[] options)
+        {
+              return EditorGUILayout.Popup(label , selected_index, options );
+            
         }
     }
 }
