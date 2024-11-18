@@ -14,6 +14,10 @@ namespace Editor.DialogueQuest.Inspector
     {
         private SerializedProperty graph_countainer_property;
         private SerializedProperty  selected_Startpoint_index;
+
+        private Basic_Node_Save_SO selcted_start_point;
+
+        private int old_StartPoint_Index;
         
 
         private void OnEnable()
@@ -32,8 +36,10 @@ namespace Editor.DialogueQuest.Inspector
                 
                 return;
             }
+            Draw_Start_point_Area(current_runtime_data);
+            
         }
-
+        
         private void Draw_Graph_Container_Area()
         {
             Inspector_Utility.Draw_title("Graph Container");
@@ -45,15 +51,32 @@ namespace Editor.DialogueQuest.Inspector
         {
             Inspector_Utility.Draw_title("Start Point ");
 
-            string[] start_points_name = runtime_data.graph_start_points.Values.Select(node => node.name).ToArray();
+            string[] start_points_names = runtime_data.graph_start_points.Values.Select(node => node.name).ToArray();
             
-            int old_StartPoint_Index = selected_Startpoint_index.intValue;
-
-            int selected_point_index = 0; //needs to update 
-
-            string selected_point_name = start_points_name[selected_point_index];
+            old_StartPoint_Index = selected_Startpoint_index.intValue = 0;
             
-            Basic_Node_Save_SO se = (Basic_Node_Save_SO)Save_Utilities.Load_Asset<Basic_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{runtime_data.File_name}/Elements/basic" , selected_point_name );
+            int selected_point_index = Inspector_Utility.Draw_Dropdown_field("Start Point", 0, start_points_names);
+
+            string selected_point_name = start_points_names[selected_point_index];
+            
+             selcted_start_point = (Basic_Node_Save_SO)Save_Utilities.Load_Asset<Basic_Node_Save_SO>($"Assets/DialogueManager/Save/Cache/{runtime_data.File_name}/Elements/basic" , selected_point_name );
+             
+             Inspector_Utility.Draw_Space();
         }
+
+        private void Draw_dialogue_show_settings()
+        {
+             Inspector_Utility.Draw_title("Dialogue  Runtime Settings");
+             
+             
+             
+             Inspector_Utility.Draw_Space();
+        }
+
+        private void Draw_dialogue_flow_area()
+        {
+            //The adjustant for showing dialogues as one charcter at one time 
+        }
+        
     }
 }
